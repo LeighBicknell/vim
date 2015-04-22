@@ -1,0 +1,809 @@
+extends html
+# ################################## MINI HELPERS ###############################
+snippet ?? "<?php ?>" !i
+<?php
+${VISUAL}$0
+?>
+endsnippet
+
+snippet ??il "<?php ?>  inline" !i
+<?php ${VISUAL}$1; $2?>$0
+endsnippet
+
+snippet ??ile "<?php echo ?>  inline" !i
+<?php echo ${VISUAL}$1; $2?>$0
+endsnippet
+
+snippet tr "Translation" !i
+_t('[${VISUAL}$1]')$0
+endsnippet
+
+snippet tre "Inline translation echo" !i
+_te('[${VISUAL}$1]')$0
+endsnippet
+
+snippet iltre "Inline translation echo" !i
+<?php _te('[${VISUAL}$1]'); ?>$0
+endsnippet
+
+snippet tra "Translation array" !i
+'[$1]' => array(
+    'eng' => '$2',
+    'cym' => '$3',
+),
+endsnippet
+
+snippet arr "array" !i
+$${1:arrayName} = array('${2}' => ${3});${4}
+endsnippet
+
+snippet def "def" !
+define('${1}'${2});${3}
+endsnippet
+
+snippet $_C "_COOKIE" !i
+$_COOKIE['${1}']${2}
+endsnippet
+
+snippet $_E "_ENV" !i
+$_ENV['${1}']${2}
+endsnippet
+
+snippet $_F "_FILES" !i
+$_FILES['${1}']${2}
+endsnippet
+
+snippet $_R "_REQUEST" !i
+$_REQUEST['${1}']${2}
+endsnippet
+
+snippet $_G "_GET" !i
+$_GET['${1}']${2}
+endsnippet
+
+snippet $_P "_POST" !i
+$_POST['${1}']${2}
+endsnippet
+
+snippet $_SER "_SERVER" !i
+$_SERVER['${1}']${2}
+endsnippet
+
+snippet $_S "_SESSION" !i
+$_SESSION['${1}']${2}
+endsnippet
+
+snippet inc "include" !
+include '${1:file}';${2}
+endsnippet
+
+snippet log "error_log" !
+error_log(var_export(${1}, true));${2}
+endsnippet
+
+snippet req1 "require_once" !
+require_once '${1:file}';${2}
+endsnippet
+
+snippet sh "Short hand" !
+(${1:condition} ? ${2:a} : ${3:b})${4}
+endsnippet
+
+snippet rett "return true"
+return true;
+endsnippet
+
+snippet retf "return false"
+return false;
+endsnippet
+
+snippet $th "this->"
+$this->
+endsnippet
+
+########################### BIGI HELPERS ######################
+snippet P2v "_POST to named variables" !
+$${1:expected} = array('${2://strings}');
+foreach($$1 as $k) {
+    if(!empty($_POST[$k])) {
+        $\{$k\}=$_POST[$k];
+    } else {
+        $\{$k\}=NULL;
+    }
+}
+endsnippet
+
+snippet G2v "_GET to named variables" !
+$${1:expected} = array('${2://strings}');
+foreach($$1 as $k) {
+    if(!empty($_GET[$k])) {
+        $\{$k\}=$_GET[$k];
+    } else {
+        $\{$k\}=NULL;
+    }
+}
+endsnippet
+
+snippet srv_maxupload "Get server max upload allowed" !
+$max_upload = (int)(ini_get('upload_max_filesize'));
+$max_post = (int)(ini_get('post_max_size'));
+$memory_limit = (int)(ini_get('memory_limit'));
+$upload_mb = min($max_upload, $max_post, $memory_limit);
+echo "max_upload $max_upload <br/>";
+echo "max_post $max_post<br/>";
+echo "memory_limit $memory_limit <br/>";
+echo "upload_mb = ".min($max_upload,$max_post,$memory_limit);
+endsnippet
+
+snippet redirect "HTTP Redirect"
+header ("HTTP/1.1 301 Moved Permanently");
+header ("Location: ".${1:URL});
+exit();
+$0
+endsnippet
+
+########################### DEBUG #############################
+snippet err "Error reporting" !
+error_reporting(E_ALL);
+ini_set('display_errors', 1);$0
+endsnippet
+
+snippet dbg "Error reporting" !
+error_reporting(E_ALL);
+ini_set('display_errors', 1);$0
+endsnippet
+
+snippet ve "var_export" !
+
+// DEBUG
+echo "\r\n<pre><!-- \r\n"; $DBG_DBG = debug_backtrace();
+foreach($DBG_DBG as $DD) {
+    echo implode(':', array(@$DD['file'], @$DD['line'], @$DD['function'])) . "\r\n";
+}
+echo " -->\r\n";
+var_export(${VISUAL}${1});
+echo "</pre>\r\n";$0
+
+endsnippet
+
+snippet ??ve "var_export inline" !
+<?php // DEBUG ?>
+<?php var_export(${VISUAL}${1}); ?>$0
+endsnippet
+
+snippet vd "var_dump" !
+
+// DEBUG
+echo "\r\n<pre><!-- \r\n"; $DBG_DBG = debug_backtrace();
+foreach($DBG_DBG as $DD) {
+    echo implode(':', array(@$DD['file'], @$DD['line'], @$DD['function'])) . "\r\n";
+}
+echo " -->\r\n";
+var_dump(${VISUAL}${1});
+echo "</pre>\r\n";$0
+
+endsnippet
+
+snippet ??vd "var_dump inline" !
+<?php // DEBUG ?>
+<?php echo '<pre>'; ?>
+<?php var_dump(${VISUAL}${1}); ?>
+<?php echo '</pre>'; ?>$0
+endsnippet
+
+snippet vdd "var_dump die" !
+
+// DEBUG
+echo "\r\n<pre><!-- \r\n"; $DBG_DBG = debug_backtrace();
+foreach($DBG_DBG as $DD) {
+    echo implode(':', array(@$DD['file'], @$DD['line'], @$DD['function'])) . "\r\n";
+}
+echo " -->\r\n";
+var_dump(${VISUAL}${1});
+echo "</pre>\r\n";
+die();$0
+
+endsnippet
+
+snippet ??vdd "var_dump die inline" !
+<?php // DEBUG ?>
+<?php var_dump(${VISUAL}${1}); ?>
+<?php die(); ?>$0
+endsnippet
+
+snippet pr "print_r" !
+// DEBUG
+print_r(${VISUAL}${1});${2}
+endsnippet
+
+snippet ??pr "print_r inline" !
+<?php // DEBUG ?>
+<?php print_r(${VISUAL}${1}); ?>${2}
+endsnippet
+
+snippet prd "print_r die" !
+// DEBUG
+print_r(${VISUAL}${1});
+die();$0
+endsnippet
+
+snippet ??prd "print_r die inline" !
+<?php // DEBUG ?>
+<?php print_r(${VISUAL}${1}); ?>
+<?php die(); ?>$0
+endsnippet
+
+snippet try "try catch" !
+try {
+	${VISUAL}${1}
+} catch (Exception $e) {
+	die($e->getMessage());
+}
+endsnippet
+
+########################### BLOCK ###########################
+snippet if "if" !
+if(${1:/* condition */}) {
+    ${VISUAL}${2}
+}$0
+endsnippet
+
+snippet ifvc "if visual condition wrap" !
+if(${VISUAL}${1}) {
+    ${2}
+}$0
+endsnippet
+
+snippet ilif "if inline" !
+<?php if(${1:/* condition */}) : ?>
+${VISUAL}${2}
+<?php endif; ?>$0
+endsnippet
+
+snippet ilifvc "if inline" !
+<?php if(${VISUAL}${1}) : ?>
+    ${2}
+<?php endif; ?>$0
+endsnippet
+
+snippet ifel "if else" !
+if (${1:/* condition */}) {
+    ${VISUAL}${2}
+} else {
+    ${3:// code...}
+}$0
+endsnippet
+
+snippet ifelvc "if else visual condition wrap" !
+if (${VISUAL}${1}) {
+    ${2:// code...}
+} else {
+    ${3:// code...}
+}$0
+endsnippet
+
+snippet ifelve "if else visual else wrap" !
+if (${1:/* condition */}) {
+    ${2:// code...}
+} else {
+    ${VISUAL}${3}
+}$0
+endsnippet
+
+snippet ilifel "If Else Inline"
+<?php if (${1:/* condition */}): ?>
+    ${VISUAL}${2}
+<?php else: ?>
+    ${3:<!-- html... -->}
+<?php endif; ?>$0
+endsnippet
+
+snippet ilifelvc "If Else Inline visual condition wrap"
+<?php if(${VISUAL}${1}): ?>
+    ${2:<!-- html... -->}
+<?php else: ?>
+    ${3:<!-- html... -->}
+<?php endif; ?>$0
+endsnippet
+
+snippet ilifelve "If Else Inline visual else wrap"
+<?php if (${1:/* condition */}): ?>
+    ${2:<!-- html... -->}
+<?php else: ?>
+    ${VISUAL}${3}
+<?php endif; ?>$0
+endsnippet
+
+snippet elif "elseif" !
+elseif(${1:/* condition */}) {
+    ${VISUAL}${2}
+}$0
+endsnippet
+
+snippet elifvc "elseif visual condition wrap" !
+elseif(${VISUAL}${1:/* condition */}) {
+    ${2:// code...}
+}$0
+endsnippet
+
+snippet ilelif "elseif inline" !
+<?php elseif(${1}) : ?>
+    ${VISUAL}${2}
+<?php endif; ?>$0
+endsnippet
+
+snippet ilelifvc "elseif inline" !
+<?php elseif(${VISUAL}${1}) : ?>$0
+endsnippet
+
+snippet el "else" !
+else {
+    ${VISUAL}${1}
+}$0
+endsnippet
+
+snippet ilel "else inline" !
+<?php else : ?>$0
+endsnippet
+
+snippet ileif "endif inline" !
+<?php endif; ?>$0
+endsnippet
+
+snippet for "for" !
+for($${2:i} = 0; $$2 < ${1:count}; $$2${3:++}) {
+    ${VISUAL}${4}
+}$0
+endsnippet
+
+snippet ilfor "for inline" !
+<?php for($${2:i} = 0; $$2 < ${1:count}; $$2${3:++}) : ?>
+    ${VISUAL}${4}
+<?php endfor; ?>$0
+endsnippet
+
+snippet ilefor "endfor inline" !
+<?php endfor; ?>$0
+endsnippet
+
+snippet fore "Foreach loop" !
+foreach ($${1:variable} as $${2:v}) {
+    ${VISUAL}${3}
+}$0
+endsnippet
+
+snippet ilfore "Foreach loop inline" !
+<?php foreach ($${1:variable} as $${2:v}) : ?>
+    ${VISUAL}${3}
+<?php endforeach; ?>$0
+endsnippet
+
+snippet forek "foreachk" !
+foreach($${1:variable} as $${2:k} => $${3:v}) {
+    ${VISUAL}${4}
+}$0
+endsnippet
+
+snippet ilforek "foreach key inline" !
+<?php foreach($${1:variable} as $${2:k} => $${3:v}) : ?>
+    ${VISUAL}
+<?php endforeach; ?>$0
+endsnippet
+
+snippet ilefore "endfor inline" !
+<?php endforeach; ?>$0
+endsnippet
+
+snippet do "do" !
+do {
+    ${VISUAL}${1}
+} while (${2:/* condition */});$0
+endsnippet
+
+snippet dovc "do loop visual condition wrap" !
+do {
+    ${1:// code... }
+} while (${VISUAL}${2});$0
+endsnippet
+
+snippet while "while" !
+while(${1:/* condition */})
+{
+    ${VISUAL}${2}
+}$0
+endsnippet
+
+snippet whilevc "while visual condition wrap" !
+while(${VISUAL}${1})
+{
+    ${2:// code...}
+}$0
+endsnippet
+
+snippet ilwhile "while inline" !
+<?php while(${1:/* condition */}) : ?>
+    ${VISUAL}
+<?php endwhile; ?>$0
+endsnippet
+
+snippet ilwhilevc "while inline visual condition wrap" !
+<?php while(${VISUAL}${1}) : ?>
+    ${2}
+<?php endwhile; ?>$0
+endsnippet
+
+snippet ilewhile "end while inline" !
+<?php endwhile; ?>$0
+endsnippet
+
+snippet switch "switch" !
+switch(${1:$var})
+{
+    case '${2}':
+        ${3:// Code}
+        break;
+    default:
+        ${4:// Code}
+        break;
+}$0
+endsnippet
+
+# ######################### FUNCTIONS #########################
+snippet fu "function" !
+function ${1}(${2})
+{
+    ${VISUAL}${3}
+}$0
+endsnippet
+
+snippet pub "Public function" !b
+public function ${1}(${2})
+{
+    ${VISUAL}${3}
+}$0
+endsnippet
+
+snippet pro "Protected function" !b
+protected function ${1}(${2})
+{
+    ${VISUAL}${3}
+}$0
+endsnippet
+
+snippet pri "Private function" !b
+private function ${1}(${2})
+{
+    ${VISUAL}${3}
+}$0
+endsnippet
+
+snippet pubs "Public static function" !b
+public static function ${1}(${2})
+{
+    ${VISUAL}${3}
+}$0
+endsnippet
+
+snippet pros "Protected static function" !b
+protected static function ${1}(${2})
+{
+    ${VISUAL}${3}
+}$0
+endsnippet
+
+snippet pris "Private static function" !b
+private static function ${1}(${2})
+{
+    ${VISUAL}${3}
+}$0
+endsnippet
+
+snippet fi "Base php file with tags and doc" !
+<?php
+/**
+ * ${1:`!p snip.rv=snip.fn`}
+ *
+ * PHP Version 5.3.1
+ *
+ * @category   ${2}
+ * @package    ${3}
+ * @subpackage ${4}
+ * @author     Leigh Bicknell <leigh@orangeleaf.com>
+ * @license    Copyright Orangeleaf Systems Ltd 2013
+ * @link       http://orangeleaf.com
+ */
+
+$0
+
+endsnippet
+
+# ########################## DOCS #########################
+snippet fidoc "File documentation" !
+/**
+ * ${1:`!p snip.rv=snip.fn`}
+ *
+ * PHP Version 5.3.1
+ *
+ * @category   ${2}
+ * @package    ${3}
+ * @subpackage ${4}
+ * @author     Leigh Bicknell <leigh@orangeleaf.com>
+ * @license    Copyright Orangeleaf Systems Ltd 2013
+ * @link       http://orangeleaf.com
+ */
+
+$0
+
+endsnippet
+
+snippet cdoc "Class Doc" !
+/**
+ * Class   ${1:`!p snip.rv=snip.fn.capitalize().split('.')[0]`}
+ *
+ * @category   ${2}
+ * @package    ${3}
+ * @subpackage ${4}
+ * @author     Leigh Bicknell <leigh@orangeleaf.com>
+ * @license    Copyright Orangeleaf Systems Ltd 2013
+ * @link       http://orangeleaf.com
+ */$0
+endsnippet
+
+snippet fdoc "Function Doc" !
+/**
+ * ${1}
+ *
+ * @return ${2}
+ * @access ${3}
+ */
+endsnippet
+
+snippet vdoc "Var Doc" !
+/* @var $${1} ${2} */
+endsnippet
+
+# ########################### CLASSES #########################
+
+snippet class "Class" !b
+/**
+ * Class ${1:`!p snip.rv=snip.fn.split('.')[0]`}
+ *
+ * @category   ${2}
+ * @package    ${3}
+ * @subpackage ${4}
+ * @author     Leigh Bicknell <leigh@orangeleaf.com>
+ * @license    Copyright Orangeleaf Systems Ltd 2013
+ * @link       http://orangeleaf.com
+ */
+class $1
+{
+    $5
+    /**
+     * $7
+     *
+     * @return ${6:void}
+     * @access public
+     */
+    public function ${7:__construct}(${8:$options})
+    {
+        ${9:// code}
+    }$0
+}
+endsnippet
+
+snippet inter "interface" !b
+/**
+ * Interface ${1:`!p snip.rv=snip.fn.split('.')[0]`}
+ *
+ * @category   ${2}
+ * @package    ${3}
+ * @subpackage ${4}
+ * @author     Leigh Bicknell <leigh@orangeleaf.com>
+ * @license    Copyright Orangeleaf Systems Ltd 2013
+ * @link       http://orangeleaf.com
+ */
+interface $1
+{
+    public function ${6:__construct}(${7:$options});$0
+}
+endsnippet
+
+snippet new "New class instance" !b
+$$1 = new $2($3);$0
+endsnippet
+
+snippet getter "PHP Class Getter" !b
+/**
+ * Getter for $1
+ *
+ * @return ${2:mixed}
+ * @access public
+ */
+public function get${1/\w+\s*/\u$0/}()
+{
+    return $this->$1;$3
+}$0
+endsnippet
+
+snippet setter "PHP Class Setter" !b
+/**
+ * Setter for $1
+ *
+ * @param ${2:mixed} $$1 Set $$1
+ *
+ * @return ${4:self}
+ * @access public
+ */
+public function set${1/\w+\s*/\u$0/}($$1)
+{
+    $this->$1 = $$1;$5
+    ${6:return $this;}
+}$0
+endsnippet
+
+snippet gs "PHP Class Getter Setter" !b
+
+/**
+ * Getter for $${1:var}
+ *
+ * return ${2:mixed}
+ * @access public
+ */
+public function get${1/\w+\s*/\u$0/}()
+{
+    return $this->$1;
+}
+
+/**
+ * Setter for $1
+ *
+ * @param $2 $$1 Set $$1
+ *
+ * @return ${4:self}
+ * @access public
+ */
+public function set${1/\w+\s*/\u$0/}($$1)
+{
+    $this->$1 = $$1;
+    ${5:return $this;}
+}$0
+endsnippet
+
+##################### EXCEPTIONS ######################
+snippet throwBadFunctionCallException "BadFunctionCallException" !b
+throw new BadFunctionCallException($1);
+endsnippet
+
+snippet throwBadMethodCallException "BadMethodCallException" !b
+throw new BadMethodCallException($1);
+endsnippet
+
+snippet throwDomainException "DomainException" !b
+throw new DomainException($1);
+endsnippet
+
+snippet throwInvalidArguementException "InvalidArguementException" !b
+throw new InvalidArguementException($1);
+endsnippet
+
+snippet throwLengthException "LengthException" !b
+throw new LengthException($1);
+endsnippet
+
+snippet throwOutOfBoundsException "OutOfBoundsException" !b
+throw new OutOfBoundsException($1);
+endsnippet
+
+snippet throwOutOfRangeException "OutOfRangeException" !b
+throw new OutOfRangeException($1);
+endsnippet
+
+snippet throwRuntimeException "RuntimeException" !b
+throw new RuntimeException($1);
+endsnippet
+
+snippet throwUnderflowException "UnderflowException" !b
+throw new UnderflowException($1);
+endsnippet
+
+snippet throwUnexpectedValueException "UnexpectedValueException" !b
+throw new UnexpectedValueException($1);
+endsnippet
+
+snippet throwErrorException "ErrorException" !b
+throw new ErrorException($1);
+endsnippet
+
+##################### WORDPRESS ###################
+snippet wpregsc "Wordpress register script" !
+wp_register_script(${1://handle}, ${2://src}, array(${3://deps)}, `!v strftime("%d%m%Y")`, ${4://infooter});$0
+endsnippet
+
+snippet wpenqsc "Wordpress enqueue script" !
+wp_enqueue_script(${1://handle});$0
+endsnippet
+
+snippet wpregst "Wordpress register style" !
+wp_register_style(${1://handle}, ${2://src}, array(${3:deps)}, `!v strftime("%d%m%Y")`, ${4://media});$0
+endsnippet
+
+snippet wpenqst "Wordpress enqueue style" !
+wp_enqueue_style(${1://handle});$0
+endsnippet
+
+snippet wpsendmailf "Wordpress fix sendmail path" !
+function fixSendmailPath($phpmailer)
+{
+    $phpmailer->Sendmail = '/usr/sbin/sendmail -f${1:email@address.com}';
+    $phpmailer->Sender = '$1';
+    return $phpmailer;
+}
+add_action('phpmailer_init', 'fixSendmailPath');$0
+endsnippet
+################## SITESYNC #######################
+snippet errss "SiteSync CError" !i
+new CError('${1:string $details}', ${2:__CLASS__}, ${3: __FUNCTION__}, ${4:__FILE__}, ${5:false}, ${6:__CLASS__}, ${7:__LINE__});$0
+endsnippet
+
+snippet $_Sss "Sitesync __Session" !i
+$__SESSION->${1}
+endsnippet
+
+################### UnitTesting ####################
+
+
+snippet testfi "unittest" !b
+<?php
+/**
+ * ${1:`!p snip.rv=snip.fn`}
+ *
+ * PHP Version 5.3.1
+ *
+ * @category   ${2}
+ * @package    ${3}
+ * @subpackage ${4}
+ * @author     Leigh Bicknell <leigh@orangeleaf.com>
+ * @license    Copyright Orangeleaf Systems Ltd 2013
+ * @link       http://orangeleaf.com
+ */
+
+/**
+ * Class ${1:`!p snip.rv=snip.fn.split('.')[0]`}
+ *
+ * @category   ${2}
+ * @package    ${3}
+ * @subpackage ${4}
+ * @author     Leigh Bicknell <leigh@orangeleaf.com>
+ * @license    Copyright Orangeleaf Systems Ltd 2013
+ * @link       http://orangeleaf.com
+ */
+class $1 extends PHPUnit_Framework_TestCase
+{
+    $5
+    /**
+     * Setup ready for tests
+     *
+     * @return void
+     * @access public
+     */
+    public function setUp()
+    {
+		parent::setUp();${8}
+    }
+	
+	$0
+
+	/**
+	 * tearDown mockery
+	 *
+	 * @return void
+	 * @access public
+	 */
+	public function tearDown()
+	{
+		Mockery::close();
+	}
+}
+
+endsnippet
+# :vim:ft=snippets:
