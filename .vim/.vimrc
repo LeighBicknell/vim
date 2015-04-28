@@ -1373,6 +1373,9 @@
 
     augroup encrypted
       au!
+      " First make sure nothing is written to ~/.viminfo while editing
+      " an encrypted file.
+      autocmd BufReadPre,FileReadPre *.gpg set viminfo=
       " Disable swap files, and set binary file format before reading the file
       autocmd BufReadPre,FileReadPre *.gpg
         \ setlocal noswapfile bin
@@ -1380,13 +1383,13 @@
       " and run any BufReadPost autocmds matching the file name without the .gpg
       " extension
       autocmd BufReadPost,FileReadPost *.gpg
-        \ execute "'[,']!gpg -d -q --no-use-agent" |
+        \ execute "'[,']!gpg -d -q --no-use-agent 2>/dev/null" |
         \ setlocal nobin |
         \ execute "doautocmd BufReadPost " . expand("%:r")
       " Set binary file format and encrypt the contents before writing the file
       autocmd BufWritePre,FileWritePre *.gpg
         \ setlocal bin |
-        \ '[,']!gpg -c -q --no-use-agent
+        \ '[,']!gpg -c -q --no-use-agent 2>/dev/null
       " After writing the file, do an :undo to revert the encryption in the
       " buffer, and reset binary file format
       autocmd BufWritePost,FileWritePost *.gpg
