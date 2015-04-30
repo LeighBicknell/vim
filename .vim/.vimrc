@@ -730,7 +730,13 @@
 
     " dispatch {
         "let g:dispatch_compilers = 
+        nnoremap <Leader>nbb :Start npm run build<CR>
+        nnoremap <Leader>nfb :Start npm run fastbuild<CR>
+        nnoremap <Leader>nbc :Start npm run build:css<CR>
+        nnoremap <Leader>nfc :Start npm run fastbuild:css<CR>
+        nnoremap <Leader>nbj :Start npm run build:js<CR>
     " }
+
     " eclim {
         "command! -range -nargs=* Phpman call eclim#web#SearchEngine('http://uk3.php.net/results.php?l=en&p=all&q=<query>', <q-args>, <line1>, <line2>)
         "command! -range -nargs=* Google call eclim#web#SearchEngine('http://www.google.com/search?q=<query>', <q-args>, <line1>, <line2>)
