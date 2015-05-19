@@ -905,6 +905,7 @@
         let g:syntastic_auto_jump=1
         let g:syntastic_auto_loc_list=1
         let g:syntastic_php_phpcs_args="--standard=PSR2"
+        let g:syntastic_php_phpmd_post_args="~/.phpmd/ruleset.xml"
 
         let g:syntastic_php_checkers = ['php']
         let g:syntastic_php_error_checkers = ['php']
