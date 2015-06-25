@@ -104,8 +104,8 @@ endsnippet
 ########################### BIGI HELPERS ######################
 snippet P2v "_POST to named variables" !
 $${1:expected} = array('${2://strings}');
-foreach($$1 as $k) {
-    if(!empty($_POST[$k])) {
+foreach ($$1 as $k) {
+    if (!empty($_POST[$k])) {
         $\{$k\}=$_POST[$k];
     } else {
         $\{$k\}=NULL;
@@ -115,8 +115,8 @@ endsnippet
 
 snippet G2v "_GET to named variables" !
 $${1:expected} = array('${2://strings}');
-foreach($$1 as $k) {
-    if(!empty($_GET[$k])) {
+foreach ($$1 as $k) {
+    if (!empty($_GET[$k])) {
         $\{$k\}=$_GET[$k];
     } else {
         $\{$k\}=NULL;
@@ -157,7 +157,7 @@ snippet ve "var_export" !
 
 // DEBUG
 echo "\r\n<pre><!-- \r\n"; $DBG_DBG = debug_backtrace();
-foreach($DBG_DBG as $DD) {
+foreach ($DBG_DBG as $DD) {
     echo implode(':', array(@$DD['file'], @$DD['line'], @$DD['function'])) . "\r\n";
 }
 echo " -->\r\n";
@@ -175,11 +175,11 @@ snippet vd "var_dump" !
 
 // DEBUG
 echo "\r\n<pre><!-- \r\n"; $DBG_DBG = debug_backtrace();
-foreach($DBG_DBG as $DD) {
+foreach ($DBG_DBG as $DD) {
     echo implode(':', array(@$DD['file'], @$DD['line'], @$DD['function'])) . "\r\n";
 }
 echo " -->\r\n";
-var_dump(${VISUAL}${1});
+var_dump($${VISUAL}${1});
 echo "</pre>\r\n";$0
 
 endsnippet
@@ -187,7 +187,7 @@ endsnippet
 snippet ??vd "var_dump inline" !
 <?php // DEBUG ?>
 <?php echo '<pre>'; ?>
-<?php var_dump(${VISUAL}${1}); ?>
+<?php var_dump($${VISUAL}${1}); ?>
 <?php echo '</pre>'; ?>$0
 endsnippet
 
@@ -195,11 +195,11 @@ snippet vdd "var_dump die" !
 
 // DEBUG
 echo "\r\n<pre><!-- \r\n"; $DBG_DBG = debug_backtrace();
-foreach($DBG_DBG as $DD) {
+foreach ($DBG_DBG as $DD) {
     echo implode(':', array(@$DD['file'], @$DD['line'], @$DD['function'])) . "\r\n";
 }
 echo " -->\r\n";
-var_dump(${VISUAL}${1});
+var_dump($${VISUAL}${1});
 echo "</pre>\r\n";
 die();$0
 
@@ -207,13 +207,13 @@ endsnippet
 
 snippet ??vdd "var_dump die inline" !
 <?php // DEBUG ?>
-<?php var_dump(${VISUAL}${1}); ?>
+<?php var_dump($${VISUAL}${1}); ?>
 <?php die(); ?>$0
 endsnippet
 
 snippet pr "print_r" !
 // DEBUG
-print_r(${VISUAL}${1});${2}
+print_r($${VISUAL}${1});${2}
 endsnippet
 
 snippet ??pr "print_r inline" !
@@ -223,13 +223,13 @@ endsnippet
 
 snippet prd "print_r die" !
 // DEBUG
-print_r(${VISUAL}${1});
+print_r($${VISUAL}${1});
 die();$0
 endsnippet
 
 snippet ??prd "print_r die inline" !
 <?php // DEBUG ?>
-<?php print_r(${VISUAL}${1}); ?>
+<?php print_r($${VISUAL}${1}); ?>
 <?php die(); ?>$0
 endsnippet
 
@@ -243,25 +243,25 @@ endsnippet
 
 ########################### BLOCK ###########################
 snippet if "if" !
-if(${1:/* condition */}) {
+if (${1:/* condition */}) {
     ${VISUAL}${2}
 }$0
 endsnippet
 
 snippet ifvc "if visual condition wrap" !
-if(${VISUAL}${1}) {
+if (${VISUAL}${1}) {
     ${2}
 }$0
 endsnippet
 
 snippet ilif "if inline" !
-<?php if(${1:/* condition */}) : ?>
+<?php if (${1:/* condition */}) : ?>
 ${VISUAL}${2}
 <?php endif; ?>$0
 endsnippet
 
 snippet ilifvc "if inline" !
-<?php if(${VISUAL}${1}) : ?>
+<?php if (${VISUAL}${1}) : ?>
     ${2}
 <?php endif; ?>$0
 endsnippet
@@ -299,7 +299,7 @@ snippet ilifel "If Else Inline"
 endsnippet
 
 snippet ilifelvc "If Else Inline visual condition wrap"
-<?php if(${VISUAL}${1}): ?>
+<?php if (${VISUAL}${1}): ?>
     ${2:<!-- html... -->}
 <?php else: ?>
     ${3:<!-- html... -->}
@@ -315,25 +315,25 @@ snippet ilifelve "If Else Inline visual else wrap"
 endsnippet
 
 snippet elif "elseif" !
-elseif(${1:/* condition */}) {
+elseif (${1:/* condition */}) {
     ${VISUAL}${2}
 }$0
 endsnippet
 
 snippet elifvc "elseif visual condition wrap" !
-elseif(${VISUAL}${1:/* condition */}) {
+elseif (${VISUAL}${1:/* condition */}) {
     ${2:// code...}
 }$0
 endsnippet
 
 snippet ilelif "elseif inline" !
-<?php elseif(${1}) : ?>
+<?php elseif (${1}) : ?>
     ${VISUAL}${2}
 <?php endif; ?>$0
 endsnippet
 
 snippet ilelifvc "elseif inline" !
-<?php elseif(${VISUAL}${1}) : ?>$0
+<?php elseif (${VISUAL}${1}) : ?>$0
 endsnippet
 
 snippet el "else" !
@@ -351,13 +351,13 @@ snippet ileif "endif inline" !
 endsnippet
 
 snippet for "for" !
-for($${2:i} = 0; $$2 < ${1:count}; $$2${3:++}) {
+for ($${2:i} = 0; $$2 < ${1:count}; $$2${3:++}) {
     ${VISUAL}${4}
 }$0
 endsnippet
 
 snippet ilfor "for inline" !
-<?php for($${2:i} = 0; $$2 < ${1:count}; $$2${3:++}) : ?>
+<?php for ($${2:i} = 0; $$2 < ${1:count}; $$2${3:++}) : ?>
     ${VISUAL}${4}
 <?php endfor; ?>$0
 endsnippet
@@ -379,13 +379,13 @@ snippet ilfore "Foreach loop inline" !
 endsnippet
 
 snippet forek "foreachk" !
-foreach($${1:variable} as $${2:k} => $${3:v}) {
+foreach ($${1:variable} as $${2:k} => $${3:v}) {
     ${VISUAL}${4}
 }$0
 endsnippet
 
 snippet ilforek "foreach key inline" !
-<?php foreach($${1:variable} as $${2:k} => $${3:v}) : ?>
+<?php foreach ($${1:variable} as $${2:k} => $${3:v}) : ?>
     ${VISUAL}
 <?php endforeach; ?>$0
 endsnippet
@@ -407,27 +407,27 @@ do {
 endsnippet
 
 snippet while "while" !
-while(${1:/* condition */})
+while (${1:/* condition */})
 {
     ${VISUAL}${2}
 }$0
 endsnippet
 
 snippet whilevc "while visual condition wrap" !
-while(${VISUAL}${1})
+while (${VISUAL}${1})
 {
     ${2:// code...}
 }$0
 endsnippet
 
 snippet ilwhile "while inline" !
-<?php while(${1:/* condition */}) : ?>
+<?php while (${1:/* condition */}) : ?>
     ${VISUAL}
 <?php endwhile; ?>$0
 endsnippet
 
 snippet ilwhilevc "while inline visual condition wrap" !
-<?php while(${VISUAL}${1}) : ?>
+<?php while (${VISUAL}${1}) : ?>
     ${2}
 <?php endwhile; ?>$0
 endsnippet
