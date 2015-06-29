@@ -730,6 +730,7 @@
 
     " dispatch {
         "let g:dispatch_compilers = 
+        nnoremap <Leader>D :Dispatch<CR>
         nnoremap <Leader>nbb :Start npm run build<CR>
         nnoremap <Leader>nfb :Start npm run fastbuild<CR>
         nnoremap <Leader>nbc :Start npm run build:css<CR>
@@ -862,7 +863,7 @@
     " }
 
     " php-cs-fixer {
-        let g:php_cs_fixer_level = "psr2"                  " which level ?
+        let g:php_cs_fixer_level = "psr2"                 " which level ?
         let g:php_cs_fixer_config = "default"             " configuration
         let g:php_cs_fixer_php_path = "php"               " Path to PHP
         " If you want to define specific fixers:
