@@ -274,7 +274,7 @@
     " Diff ignore all whitespace hack {
         set diffopt+=iwhite
         set diffexpr=
-        " disable hack, this disables all whitespace vs changes in amount of 
+        " disable hack, this disables all whitespace vs changes in amount of
         " whitespace
         "set diffexpr=DiffW()
         function! DiffW()
@@ -665,38 +665,51 @@
 
         "Automatically generate cscope database, Takes a while due to slow remote
         "network drives :(
-        nnoremap <F10> :Start find -name '*.php' > cscope.files -not -path "*/_archive/*" -not -path "*/_archived/*" && cscope -b -i ./cscope.files -f ./cscope.out && rm ./cscope.files -f<CR>
-          \:cs reset<CR>
+        nnoremap <F10> :Start find -name '*.php' > cscope.files \
+                    \-not -path "*/_archive/*" \
+                    \-not -path "*/_archived/*" \
+                    \&& cscope -b -i ./cscope.files -f ./cscope.out \
+                    \&& rm ./cscope.files -f<CR> \
+                    \:cs reset<CR>
 
         "tags
-        nnoremap <F11> :Start -title='ctags-php' ctags-php -R --fields=+aimS --languages=php --exclude="*.CVS" --exclude="_archive" --exclude="_archived"<CR>
+        nnoremap <F11> :Start -title='ctags-php' ctags-php -R \
+                    \--fields=+aimS \
+                    \--languages=php \
+                    \--exclude="\.svn" \
+                    \--exclude="\.git" \
+                    \--exclude="*.CVS" \
+                    \--exclude="_archive" \
+                    \--exclude="_archived" \
+                    \--tag-relative=yes \
+                    \--totals=yes<CR>
 
-        " These are mapped in the CSCOPE-maps plugin to <C-@> which is 
+        " These are mapped in the CSCOPE-maps plugin to <C-@> which is
         " interpreted as <NUL> which for some reason doesn't work
-        
-        nmap <C-Space>s :scs find s <C-R>=expand("<cword>")<CR><CR>	
-        nmap <C-Space>g :scs find g <C-R>=expand("<cword>")<CR><CR>	
-        nmap <C-Space>c :scs find c <C-R>=expand("<cword>")<CR><CR>	
-        nmap <C-Space>t :scs find t <C-R>=expand("<cword>")<CR><CR>	
-        nmap <C-Space>e :scs find e <C-R>=expand("<cword>")<CR><CR>	
-        nmap <C-Space>f :scs find f <C-R>=expand("<cfile>")<CR><CR>	
-        nmap <C-Space>i :scs find i <C-R>=expand("<cfile>")<CR><CR>	
-        nmap <C-Space>d :scs find d <C-R>=expand("<cword>")<CR><CR>	
+
+        nmap <C-Space>s :scs find s <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-Space>g :scs find g <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-Space>c :scs find c <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-Space>t :scs find t <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-Space>e :scs find e <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-Space>f :scs find f <C-R>=expand("<cfile>")<CR><CR>
+        nmap <C-Space>i :scs find i <C-R>=expand("<cfile>")<CR><CR>
+        nmap <C-Space>d :scs find d <C-R>=expand("<cword>")<CR><CR>
 
 
-        " Hitting CTRL-space *twice* before the search type does a vertical 
+        " Hitting CTRL-space *twice* before the search type does a vertical
         " split instead of a horizontal one (vim 6 and up only)
 
-        nmap <C-Space><C-Space>s :vert scs find s <C-R>=expand("<cword>")<CR><CR>	
-        nmap <C-Space><C-Space>g :vert scs find g <C-R>=expand("<cword>")<CR><CR>	
-        nmap <C-Space><C-Space>c :vert scs find c <C-R>=expand("<cword>")<CR><CR>	
-        nmap <C-Space><C-Space>t :vert scs find t <C-R>=expand("<cword>")<CR><CR>	
-        nmap <C-Space><C-Space>e :vert scs find e <C-R>=expand("<cword>")<CR><CR>	
-        nmap <C-Space><C-Space>f :vert scs find f <C-R>=expand("<cfile>")<CR><CR>	
-        nmap <C-Space><C-Space>i :vert scs find i <C-R>=expand("<cfile>")<CR><CR>	
-        nmap <C-Space><C-Space>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>	
+        nmap <C-Space><C-Space>s :vert scs find s <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-Space><C-Space>g :vert scs find g <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-Space><C-Space>c :vert scs find c <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-Space><C-Space>t :vert scs find t <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-Space><C-Space>e :vert scs find e <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-Space><C-Space>f :vert scs find f <C-R>=expand("<cfile>")<CR><CR>
+        nmap <C-Space><C-Space>i :vert scs find i <C-R>=expand("<cfile>")<CR><CR>
+        nmap <C-Space><C-Space>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>
     " }
-    
+
     " CommandT {
         " Use find tool for file searching
         let g:CommandTFileScanner = 'find'
@@ -729,7 +742,7 @@
     " }
 
     " dispatch {
-        "let g:dispatch_compilers = 
+        "let g:dispatch_compilers =
         nnoremap <Leader>D :Dispatch<CR>
         nnoremap <Leader>nbb :Start npm run build<CR>
         nnoremap <Leader>nfb :Start npm run fastbuild<CR>
@@ -758,14 +771,14 @@
         "let g:EclimProjectTabTreeAutoOpen=0
         "let g:EclimProjectTreeExpandPathOnOpen=1
         "let g:EclimCompletionMethod = 'omnifunc'
-        " Turned off because if eclipse closes and re-opens, there's no way to 
+        " Turned off because if eclipse closes and re-opens, there's no way to
         " reconntect nailgun without closing and reopening vim :/
         "let g:EclimNailgunKeepAlive=1
         "let g:EclimBufferTabTracking=0
 
         " Make eclim update eclipses local history (:History command)
         " Turned this off, as I have persistant undo and undo tree, so .....
-        " Note to self: I turned this off because DLTK indexing blocks saves 
+        " Note to self: I turned this off because DLTK indexing blocks saves
         " until it's finished!
         "let g:EclimKeepLocalHistory=1
 
@@ -990,7 +1003,7 @@
         " usage!)
         "let g:ycm_collect_identifiers_from_tags_files=1
 
-        " Disable auto omni completion for these filetypes, trigger manually 
+        " Disable auto omni completion for these filetypes, trigger manually
         " instead
         let g:ycm_filetype_specific_completion_to_disable = { 'vim':1, 'txt':1, 'javascript':1, 'php':1 }
         let g:ycm_complete_in_comments = 1
