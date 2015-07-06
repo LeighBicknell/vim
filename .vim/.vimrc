@@ -665,23 +665,23 @@
 
         "Automatically generate cscope database, Takes a while due to slow remote
         "network drives :(
-        nnoremap <F10> :Start find -name '*.php' > cscope.files \
-                    \-not -path "*/_archive/*" \
-                    \-not -path "*/_archived/*" \
-                    \&& cscope -b -i ./cscope.files -f ./cscope.out \
-                    \&& rm ./cscope.files -f<CR> \
+        nnoremap <F10> :Start find -name '*.php' > cscope.files 
+                    \-not -path "*/_archive/*" 
+                    \-not -path "*/_archived/*" 
+                    \&& cscope -b -i ./cscope.files -f ./cscope.out 
+                    \&& rm ./cscope.files -f<CR> 
                     \:cs reset<CR>
 
         "tags
-        nnoremap <F11> :Start -title='ctags-php' ctags-php -R \
-                    \--fields=+aimS \
-                    \--languages=php \
-                    \--exclude="\.svn" \
-                    \--exclude="\.git" \
-                    \--exclude="*.CVS" \
-                    \--exclude="_archive" \
-                    \--exclude="_archived" \
-                    \--tag-relative=yes \
+        nnoremap <F11> :Start -title='ctags-php' ctags-php -R 
+                    \--fields=+aimS 
+                    \--languages=php 
+                    \--exclude="\.svn" 
+                    \--exclude="\.git" 
+                    \--exclude="*.CVS" 
+                    \--exclude="_archive" 
+                    \--exclude="_archived" 
+                    \--tag-relative=yes 
                     \--totals=yes<CR>
 
         " These are mapped in the CSCOPE-maps plugin to <C-@> which is
