@@ -1101,6 +1101,14 @@
     endfunction
     command! -complete=dir -nargs=+ Ptab call Ptab(<f-args>)
 
+    function! FileFix()
+        execute "set ff=unix"
+        execute "%s///ge"
+        execute "retab"
+    endfunction
+    command! FileFix call FileFix()
+    nmap <Leader>FF :call FileFix()<CR>
+
     function! Popen(tabdir, tabname)
         execute "Tcd ".a:tabdir
         execute "TName ".a:tabname
