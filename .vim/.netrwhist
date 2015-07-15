@@ -1,10 +1,2 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =8
-let g:netrw_dirhist_1='/media/ol/leighb/files/local-projects/3d'
-let g:netrw_dirhist_2='/media/ol/x/thekeep/wordpress'
-let g:netrw_dirhist_3='/media/ol/x/thekeep/wordpress/wp-content'
-let g:netrw_dirhist_4='/media/ol/x/thekeep/wordpress'
-let g:netrw_dirhist_5='/usr/local/lib/node_modules/live-reload'
-let g:netrw_dirhist_6='/home/leigh/config/.vim'
-let g:netrw_dirhist_7='/media/ol/x/wp.collectionsbase.org.uk/wordpress/wp-content/plugins/collections-base'
-let g:netrw_dirhist_8='/etc/ppp/peers'
+let g:netrw_dirhist_cnt =0

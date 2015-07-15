@@ -1352,6 +1352,26 @@
     nmap <silent> <leader>fh :%FormatHTML<CR>
     vmap <silent> <leader>fh :FormatHTML<CR>
 
+    function! DoFormatJSON() range
+        " Save the file type
+        let l:origft = &ft
+
+        " Clean the file type
+        set ft=
+
+        " Execute external formatter
+        exe ":silent %!python -m json.tool"
+
+        " Restore the file type
+        exe "set ft=" . l:origft
+    endfunction
+    command! -range=% FormatJSON <line1>,<line2>call DoFormatJSON()
+
+    nmap <silent> <leader>fj :%FormatJSON<CR>
+    vmap <silent> <leader>fj :FormatJSON<CR>
+
+
+
     let g:FindIgnore = ['.swp', '.pyc', '.class', '.git', '.svn']
     " Find file in current directory and edit it.
     function! Find(...)
