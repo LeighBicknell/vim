@@ -33,6 +33,18 @@ snippet tra "Translation array" !i
 ),
 endsnippet
 
+snippet __ "Wordpress Translation" !i
+__('${VISUAL}$1', '$2')$0
+endsnippet
+
+snippet _x "Wordpress Echo Translation" !i
+_x('${VISUAL}$1', '$2', '$3')$0
+endsnippet
+
+snippet _e "Wordpress Echo Translation" !i
+_e('${VISUAL}$1', '$2')$0
+endsnippet
+
 snippet arr "array" !i
 $${1:arrayName} = array('${2}' => ${3});${4}
 endsnippet
