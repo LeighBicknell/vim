@@ -495,6 +495,7 @@
     endif
 
     set backspace=indent,eol,start  " Backspace for dummies
+    set diffopt+=vertical           " Vertical diff
     set linespace=0                 " No extra spaces between rows (-1 for a few more lines on a screen)
     set nu                          " Line numbers on
     "set relativenumber              " Relative numbering, slow but handy
