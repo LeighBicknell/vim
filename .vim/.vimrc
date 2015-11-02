@@ -107,6 +107,7 @@
             Bundle 'wincent/Command-T'
             "Bundle 'oplatek/Conque-Shell' "Replaced by dispatch
             Bundle 'tpope/vim-dispatch'
+            Bundle 'will133/vim-dirdiff'
         endif
     " }
 
@@ -741,6 +742,12 @@
         au FileType less let b:delimitMate_expand_space = 1
         au FileType sass let b:delimitMate_expand_cr = 1
         au FileType sass let b:delimitMate_expand_space = 1
+    " }
+
+    " DirDiff {
+        " ignore white space in diff
+        let g:DirDiffAddArgs = "-w" 
+        let g:DirDiffEnableMappings = 1
     " }
 
     " dispatch {
