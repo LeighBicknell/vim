@@ -108,6 +108,8 @@
             "Bundle 'oplatek/Conque-Shell' "Replaced by dispatch
             Bundle 'tpope/vim-dispatch'
             Bundle 'will133/vim-dirdiff'
+            " Open browser
+            Bundle 'tyru/open-browser.vim'
         endif
     " }
 
@@ -129,6 +131,7 @@
             Bundle 'vim-scripts/cscope_macros.vim'
             Bundle 'Valloric/YouCompleteMe'
             Bundle 'ap/vim-css-color'
+            Bundle 'kien/ctrlp.vim'
         endif
     " }
 
@@ -145,6 +148,8 @@
             Bundle 'vim-php/vim-php-refactoring'
             Bundle 'joonty/vim-phpunitqf'
             Bundle 'stephpy/vim-php-cs-fixer'
+            " Wordpress
+            Bundle 'dsawardekar/wordpress.vim'
         endif
     " }
 
@@ -502,8 +507,8 @@
     "set relativenumber              " Relative numbering, slow but handy
     "set cursorline                  " Highlight current line, slow but handy
     "set cursorcolumn                " Now we've got smooth scroll we may aswell go all out!
-    au VimEnter * NoMatchParen
-    "set showmatch                   " Show matching brackets/parenthesis
+    "au VimEnter * NoMatchParen
+    set showmatch                   " Show matching brackets/parenthesis
     set incsearch                   " Find as you type search
     set hlsearch                    " Highlight search terms
     set winminheight=0              " Windows can be 0 line high
@@ -540,7 +545,7 @@
     set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
     highlight ColorColumn ctermbg=235
     let &colorcolumn="81,".join(range(121,999),",") " Highlight column 81 and then 121 onwards
-    autocmd FileType c,cpp,css,less,scss,sass,java,go,php,javascript,python,twig,xml,yml autocmd BufWritePre <buffer> if !exists('g:keep_trailing_whitespace') | call StripTrailingWhitespace() | endif
+    autocmd FileType c,cpp,css,less,scss,sass,java,go,php,php.wordpress,javascript,python,twig,xml,yml autocmd BufWritePre <buffer> if !exists('g:keep_trailing_whitespace') | call StripTrailingWhitespace() | endif
     autocmd FileType go autocmd BufWritePre <buffer> Fmt
     autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
     autocmd FileType haskell setlocal expandtab shiftwidth=2 softtabstop=2
@@ -671,6 +676,9 @@
         nnoremap <F10> :Start find -name '*.php' > cscope.files 
                     \-not -path "*/_archive/*" 
                     \-not -path "*/_archived/*" 
+                    \-not -path "*/.git/*" 
+                    \-not -path "*/.svn/*" 
+                    \-not -path "*/node_modules/*" 
                     \&& cscope -b -i ./cscope.files -f ./cscope.out 
                     \&& rm ./cscope.files -f<CR> 
                     \:cs reset<CR>
@@ -684,6 +692,7 @@
                     \--exclude="*.CVS" 
                     \--exclude="_archive" 
                     \--exclude="_archived" 
+                    \--exclude="node_modules" 
                     \--tag-relative=yes 
                     \--totals=yes<CR>
 
@@ -734,6 +743,8 @@
     " delimitMate {
         au FileType php let b:delimitMate_expand_cr = 1
         au FileType php let b:delimitMate_expand_space = 1
+        au FileType php.wordpress let b:delimitMate_expand_cr = 1
+        au FileType php.wordpress let b:delimitMate_expand_space = 1
         au FileType css let b:delimitMate_expand_cr = 1
         au FileType css let b:delimitMate_expand_space = 1
         au FileType scss let b:delimitMate_expand_cr = 1
@@ -910,6 +921,7 @@
 
         " Set help for php files properyly
         autocmd FileType php set kp=:help
+        autocmd FileType php.wordpress set kp=:help
     " }
 
     " PyMode {
@@ -935,6 +947,7 @@
         let g:syntastic_php_checkers = ['php']
         let g:syntastic_php_error_checkers = ['php']
         let g:syntastic_php_syntax_checkers = ['php', 'phpcs', 'phpmd']
+        let g:syntastic_wordpress_checkers = ['php']
         let g:syntastic_mode_map = { 'mode': 'active',
                                    \ 'active_filetypes': ['php'],
                                    \ 'passive_filetypes': ['css'] }
@@ -987,7 +1000,7 @@
     " }
 
     " Ultisnips {
-        let g:UltiSnipsSnippetDirectories=["default-snippets", "custom-snippets"]
+        let g:UltiSnipsSnippetDirectories=["UltiSnips", "default-snippets", "custom-snippets"]
         let g:UltiSnipsExpandTrigger="<C-CR>"
         let g:UltiSnipsJumpForwardTrigger="<C-CR>"
         let g:UltiSnipsJumpBackwardTrigger="<S-C-CR>"
@@ -1000,6 +1013,11 @@
         nmap cou :UndotreeToggle<CR>
         " If undotree is opened, it is likely one wants to interact with it.
         let g:undotree_SetFocusWhenToggle=1
+    " }
+
+    " Wordpress.vim {
+        " This screws up indenting on some lines... highly annoying
+        let g:wordpress_vim_php_syntax_highlight=0
     " }
 
     " VCS (subversion) {

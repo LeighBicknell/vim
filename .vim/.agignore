@@ -1,2 +1,5 @@
 _archive/
 _archived/
+.git/
+.svn/
+node_modules/
