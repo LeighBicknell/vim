@@ -1018,6 +1018,7 @@
     " Wordpress.vim {
         " This screws up indenting on some lines... highly annoying
         let g:wordpress_vim_php_syntax_highlight=0
+        let g:wordpress_vim_dont_generate_tags=1
     " }
 
     " VCS (subversion) {
