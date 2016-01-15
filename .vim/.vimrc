@@ -1371,12 +1371,12 @@
         set ft=
 
         " Execute external formatter
-        exe ":silent %!xmllint --html --noblanks --format --recover -"
+        exe ":silent '<,'>!xmllint --html --noblanks --format --recover --nowrap -"
 
         " Restore the file type
         exe "set ft=" . l:origft
     endfunction
-    command! -range=% FormatHTML <line1>,<line2>call DoFormatHTML()
+    command! -range FormatHTML <line1>,<line2>call DoFormatHTML()
 
     nmap <silent> <leader>fh :%FormatHTML<CR>
     vmap <silent> <leader>fh :FormatHTML<CR>
