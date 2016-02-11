@@ -282,7 +282,8 @@
         set diffexpr=
         " disable hack, this disables all whitespace vs changes in amount of
         " whitespace
-        "set diffexpr=DiffW()
+        " So why did I disable it? re-enabled
+        set diffexpr=DiffW()
         function! DiffW()
             let opt = ""
             if &diffopt =~ "icase"
@@ -824,6 +825,15 @@
         nnoremap <silent> <leader>ge :Gedit<CR>
         nnoremap <silent> <leader>gg :GitGutterToggle<CR>
         nnoremap <silent> <leader>ga :GitGutterStageHunk<CR>
+        nmap [g <Plug>GitGutterPrevHunk
+        nmap ]g <Plug>GitGutterNextHunk
+        " Auto remove fugitive buffers
+        autocmd BufReadPost fugitive://* set bufhidden=delete
+        " Go to parent directory when browsing a tree:
+        autocmd User fugitive 
+          \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
+          \   nnoremap <buffer> .. :edit %:h<CR> |
+          \ endif
     " }
 
     " JSON {
