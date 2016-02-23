@@ -113,6 +113,13 @@ snippet $th "this->"
 $this->
 endsnippet
 
+snippet zray "zray"
+if (function_exists('zray_disable')) {
+    zray_disable(true);
+}
+endsnippet
+
+
 ########################### BIGI HELPERS ######################
 snippet P2v "_POST to named variables" !
 $${1:expected} = array('${2://strings}');
