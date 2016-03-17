@@ -810,7 +810,7 @@
     " }
 
     " Emmet {
-        let g:user_emmet_leader_key = '<c-q>'
+        let g:user_emmet_leader_key = '<c-e>'
     " }
 
     " Fugitive {
