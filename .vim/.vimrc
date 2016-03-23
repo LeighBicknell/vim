@@ -908,6 +908,7 @@
     " }
 
     " php-cs-fixer {
+        " use ,pcd for PhpCsFixerFixDirectory and ,pcf for PhpCsFixerFixFile
         let g:php_cs_fixer_level = "psr2"                 " which level ?
         let g:php_cs_fixer_config = "default"             " configuration
         let g:php_cs_fixer_php_path = "php"               " Path to PHP
