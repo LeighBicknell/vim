@@ -1369,7 +1369,6 @@
         exe "set ft=" . l:origft
     endfunction
     command! -range=% FormatXML <line1>,<line2>call DoFormatXML()
-
     nmap <silent> <leader>fx :%FormatXML<CR>
     vmap <silent> <leader>fx :FormatXML<CR>
 
@@ -1388,7 +1387,6 @@
         exe "set ft=" . l:origft
     endfunction
     command! -range FormatHTML <line1>,<line2>call DoFormatHTML()
-
     nmap <silent> <leader>fh :%FormatHTML<CR>
     vmap <silent> <leader>fh :FormatHTML<CR>
 
@@ -1406,9 +1404,18 @@
         exe "set ft=" . l:origft
     endfunction
     command! -range=% FormatJSON <line1>,<line2>call DoFormatJSON()
-
     nmap <silent> <leader>fj :%FormatJSON<CR>
     vmap <silent> <leader>fj :FormatJSON<CR>
+
+    function! DoFormatSASS() range
+        let l:origft = &ft
+        set ft=
+        exe ":silent '<,'>!sass-convert --stdin --to=scss --indent=4"
+        exe "set ft=" . l:origft
+    endfunction
+    command! -range=% FormatSASS <line1>,<line2>call DoFormatSASS()
+    nmap <silent> <leader>fs :%FormatSASS<CR>
+    vmap <silent> <leader>fs :FormatSASS<CR>
 
 
 
