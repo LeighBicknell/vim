@@ -952,6 +952,10 @@
         let g:syntastic_check_on_open=0
         let g:syntastic_auto_jump=1
         let g:syntastic_auto_loc_list=1
+
+        let g:syntastic_scss_scss_lint_exec="/usr/local/bin/scss-lint"
+        let g:syntastic_scss_checkers=['scss_lint']
+
         let g:syntastic_php_phpcs_args="--standard=PSR2"
         let g:syntastic_php_phpmd_post_args="~/.phpmd/ruleset.xml"
 
