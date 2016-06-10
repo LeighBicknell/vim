@@ -953,8 +953,10 @@
         let g:syntastic_auto_jump=1
         let g:syntastic_auto_loc_list=1
 
-        let g:syntastic_scss_scss_lint_exec="/usr/local/bin/scss-lint"
-        let g:syntastic_scss_checkers=['scss_lint']
+        if filereadable("/usr/local/bin/scss-lint")
+            let g:syntastic_scss_scss_lint_exec="/usr/local/bin/scss-lint"
+            let g:syntastic_scss_checkers=['scss_lint']
+        endif
 
         let g:syntastic_php_phpcs_args="--standard=PSR2"
         let g:syntastic_php_phpmd_post_args="~/.phpmd/ruleset.xml"
@@ -1414,7 +1416,7 @@
     function! DoFormatSASS() range
         let l:origft = &ft
         set ft=
-        exe ":silent '<,'>!sass-convert --stdin --to=scss --indent=4"
+        exe ":silent '<,'>!sass-convert --stdin --from=scss --to=scss --indent=4"
         exe "set ft=" . l:origft
     endfunction
     command! -range=% FormatSASS <line1>,<line2>call DoFormatSASS()
