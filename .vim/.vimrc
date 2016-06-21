@@ -1442,8 +1442,8 @@
             let ignore = " | egrep -v '".join(g:FindIgnore, "|")."'"
         endif
 
-        echo "find ".path." -regex ".query."".ignore
-        let l:list=system("find ".path." -regex ".query."".ignore)
+        echo "find ".path." -type f -regex ".query.ignore
+        let l:list=system("find ".path." -type f -regex ".query.ignore)
         let l:num=strlen(substitute(l:list, "[^\n]", "", "g"))
 
         if l:num < 1
