@@ -146,7 +146,7 @@
             Bundle 'tobyS/pdv'
             Bundle 'arnaud-lb/vim-php-namespace'
             Bundle 'rayburgemeestre/phpfolding.vim'
-            Bundle 'vim-php/vim-php-refactoring'
+            Bundle 'FlickerBean/vim-php-refactoring'
             Bundle 'joonty/vim-phpunitqf'
             Bundle 'stephpy/vim-php-cs-fixer'
             " Wordpress
