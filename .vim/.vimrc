@@ -116,6 +116,7 @@
     "
     " General Programming {
         if count(g:bundle_groups, 'programming')
+            Plugin 'luochen1990/rainbow'
             Bundle 'scrooloose/syntastic'
             "Git integration
             Bundle 'tpope/vim-fugitive'
@@ -946,6 +947,11 @@
         if !has('python')
             let g:pymode = 1
         endif
+    " }
+
+    " Rainbow {
+        let g:rainbow_active=0
+        noremap <Leader>R :RainbowToggle<Cr>
     " }
 
     " syntastic {
