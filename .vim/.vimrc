@@ -954,6 +954,11 @@
         noremap <Leader>R :RainbowToggle<Cr>
     " }
 
+    " Surround {
+        " yss- = php tags
+        autocmd FileType php let b:surround_45 = "<?php \r ?>"
+    " }
+
     " syntastic {
         let g:syntastic_check_on_open=0
         let g:syntastic_auto_jump=1
