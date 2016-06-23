@@ -14,7 +14,7 @@
 
     let g:bundle_groups=['general', 'programming', 'php', 'javascript', 'html']
     let g:EclimBaseDir=$HOME . "/.vim/bundle/eclim-vimfiles"
-    let g:php_refactor_command='php ' . $HOME . '/.vim/refactor.phar'
+    let g:php_refactor_command='php-refactor'
     let g:xml_syntax_folding=1
     let g:EclimBrowser='firefox'
     "au FileType xml setlocal foldmethod=syntax
