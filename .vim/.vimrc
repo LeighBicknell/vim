@@ -132,7 +132,6 @@
             Bundle 'vim-scripts/cscope_macros.vim'
             Bundle 'Valloric/YouCompleteMe'
             Bundle 'ap/vim-css-color'
-            Bundle 'kien/ctrlp.vim'
         endif
     " }
 
