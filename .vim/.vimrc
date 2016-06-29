@@ -142,7 +142,7 @@
             Bundle 'tobyS/vmustache'
             " PHPDocBlocks
             Bundle 'shawncplus/phpcomplete.vim'
-            Bundle 'tobyS/pdv'
+            Bundle 'FlickerBean/pdv'
             Bundle 'arnaud-lb/vim-php-namespace'
             Bundle 'rayburgemeestre/phpfolding.vim'
             Bundle 'FlickerBean/vim-php-refactoring'
@@ -646,6 +646,10 @@
         let b:match_ignorecase = 1
         " vim-css-color for scss and sass (and less)
         autocmd FileType less,sass,scss,stylus,vim syn cluster sassCssAttributes add=@cssColors
+    " }
+
+    " Ack {
+        nnoremap <Leader>pa :Ack --php <c-r><c-w><CR>
     " }
 
     " Bbye {
