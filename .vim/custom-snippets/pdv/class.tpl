@@ -1,6 +1,6 @@
 /**
  * Class ${1:{{name}}}
-
+ *
  * @category   ${2}
  * @package    ${3}
  * @subpackage ${4}
