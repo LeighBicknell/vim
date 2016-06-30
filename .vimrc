@@ -19,16 +19,11 @@ endif
             set shellxquote=\"
             let g:cygwin=1
         endif
-        " prevent netrw loading (rarely use it and it slows down buffer switching by 300-800ms)
-        "let g:loaded_netrw       = 0
-        "let g:loaded_netrwPlugin = 0
     " }
 
     let g:bundle_groups=['general', 'programming', 'php', 'javascript', 'html']
-    let g:EclimBaseDir=$HOME . "/.vim/bundle/eclim-vimfiles"
     let g:php_refactor_command='php-refactor'
     let g:xml_syntax_folding=1
-    let g:EclimBrowser='firefox'
     "au FileType xml setlocal foldmethod=syntax
 "}
 
@@ -882,7 +877,7 @@ endif
             \ 'open':  1,
             \ 'jump':  0,
             \ 'ag': {
-            \   'grepprg': 'ag --nogroup --nocolor --column --smart-case --path-to-agignore="'.$editor_root.'/.agignore"',
+            \   'grepprg': 'ag --vimgrep --smart-case --path-to-agignore="'.$editor_root.'/.agignore"',
             \   }
             \ }
         nnoremap <leader>git :Grepper -tool git -noswitch<cr>
@@ -1085,8 +1080,9 @@ endif
         let g:UltiSnipsExpandTrigger="<C-CR>"
         let g:UltiSnipsJumpForwardTrigger="<C-CR>"
         let g:UltiSnipsJumpBackwardTrigger="<S-C-CR>"
-        let g:UltiSnipsSnippetsDir=$HOME . "/.vim/custom-snippets"
+        let g:UltiSnipsSnippetsDir=$editor_root . "/custom-snippets"
         let g:UltiSnipsEditSplit='vertical'
+        let g:UltiSnipsUsePythonVersion=2
     " }
 
     " UndoTree {
