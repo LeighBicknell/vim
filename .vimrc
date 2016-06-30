@@ -3,8 +3,10 @@ let $HOME = "/home/leigh"
 " Neovim segregation support
 if has('nvim')
     let s:editor_root=expand($HOME . "/.nvim")
+    let $editor_root=s:editor_root
 else
     let s:editor_root=expand($HOME . "/.vim")
+    let $editor_root=s:editor_root
 endif
 
 
@@ -85,15 +87,16 @@ endif
         Bundle 'MarcWeber/vim-addon-mw-utils'
         Bundle 'tomtom/tlib_vim'
         Bundle 'Shougo/vimproc.vim'
-        if executable('ack-grep')
-            let g:ackprg="ack-grep -H --nocolor --nogroup --column"
-            Bundle 'mileszs/ack.vim'
-        elseif executable('ack')
-            Bundle 'mileszs/ack.vim'
-        elseif executable('ag')
-            Bundle 'mileszs/ack.vim'
-            let g:ackprg = 'ag --nogroup --nocolor --column --smart-case --path-to-agignore '.s:editor_root.'/.agignore'
-        endif
+        "  if executable('ack-grep')
+        "       let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+        "       Bundle 'mileszs/ack.vim'
+        "   elseif executable('ack')
+        "       Bundle 'mileszs/ack.vim'
+        "   elseif executable('ag')
+        "       Bundle 'mileszs/ack.vim'
+        "       let g:ackprg = 'ag --nogroup --nocolor --column --smart-case --path-to-agignore '.s:editor_root.'/.agignore'
+        "   endif
+        Bundle 'mhinz/vim-grepper'
     " }
 
     " General {
@@ -249,8 +252,8 @@ endif
     scriptencoding utf-8
 
     " This linux if isn't working :/
-    if has ('unix') && has ('gui') " On Linux use + register for copy-paste
-        set clipboard=unnamedplus
+    if has ('unix') && (has ('gui') || has('nvim')) " On Linux use + register for copy-paste
+            set clipboard=unnamedplus
     elseif has ('gui')          " On mac and Windows, use * register for copy-paste
         set clipboard=unnamed
     endif
@@ -651,6 +654,24 @@ endif
 
     " Multipage (scrollbind)
     "nmap <silent> <Leader>ef :vsplit<bar>wincmd l<bar>exe "norm! Ljz<c-v><cr>"<cr>:set scb<cr>:wincmd h<cr> :set scb<cr>
+
+
+    " NeoVim Mappings {
+    if has('nvim')
+        " Terminal esc
+        tnoremap <Esc> <C-\><C-N>
+
+        " Terminal window change mappings
+        tnoremap <A-h> <C-\><C-n><C-w>h
+        tnoremap <A-j> <C-\><C-n><C-w>j
+        tnoremap <A-k> <C-\><C-n><C-w>k
+        tnoremap <A-l> <C-\><C-n><C-w>l
+        nnoremap <A-h> <C-w>h
+        nnoremap <A-j> <C-w>j
+        nnoremap <A-k> <C-w>k
+        nnoremap <A-l> <C-w>l
+    endif
+    " }
 " }
 
 " Plugins {
@@ -662,8 +683,8 @@ endif
         autocmd FileType less,sass,scss,stylus,vim syn cluster sassCssAttributes add=@cssColors
     " }
 
-    " Ack {
-        nnoremap <Leader>pa :Ack --php <c-r><c-w><CR>
+    " Ack-grep {
+        "nnoremap <Leader>pa :Ack --php <c-r><c-w><CR>
     " }
 
     " Bbye {
@@ -852,6 +873,21 @@ endif
           \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
           \   nnoremap <buffer> .. :edit %:h<CR> |
           \ endif
+    " }
+    
+    " Grepper {
+         " Mimic :grep and make ag the default tool.
+        let g:grepper = {
+            \ 'tools': ['ag', 'git', 'grep'],
+            \ 'open':  1,
+            \ 'jump':  0,
+            \ 'ag': {
+            \   'grepprg': 'ag --nogroup --nocolor --column --smart-case --path-to-agignore="'.$editor_root.'/.agignore"',
+            \   }
+            \ }
+        nnoremap <leader>git :Grepper -tool git -noswitch<cr>
+        nnoremap <leader>ag  :Grepper -tool ag -noswitch -cword<cr>
+        nnoremap <leader>*   :Grepper -tool ag -noswitch -cword -noprompt<cr>
     " }
 
     " JSON {
@@ -1355,7 +1391,7 @@ endif
     " -H, --with-filename
     " -n, --line-number
     " -s, --no-messages (suppress error msgs)
-    set grepprg=grep\ -Hns
+    "set grepprg=grep\ -Hns
     " XML formatter
     function! DoFormatXML() range
         " Save the file type
