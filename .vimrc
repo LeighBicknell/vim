@@ -995,7 +995,7 @@ endif
         let g:syntastic_wordpress_checkers = ['php']
         let g:syntastic_mode_map = { 'mode': 'active',
                                    \ 'active_filetypes': ['php'],
-                                   \ 'passive_filetypes': ['css'] }
+                                   \ 'passive_filetypes': ['css', 'scss'] }
         command! SErrors call SErrors()
         function! SErrors()
             let g:syntastic_old_php_checkers = g:syntastic_php_checkers
@@ -1129,6 +1129,9 @@ endif
     let g:solarized_visibility="normal"
     let g:solarized_termtrans=0    "default value is 0
     let g:solarized_termcolors=256    "default value is 16
+    if has('nvim')
+        let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+    endif
     syntax enable
     set background=dark
     colorscheme solarized
