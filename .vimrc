@@ -1129,7 +1129,7 @@ endif
         set guioptions-=T           " Remove the toolbar
         set guioptions-=m           " Remove the menu
         "set lines=40                " 40 lines of text instead of 24
-        set guifont=Source\ Code\ Pro\ Medium\ 8,Andale\ Mono\ Regular\ 16,Menlo\ Regular\ 15,Consolas\ Regular\ 16,Courier\ New\ Regular\ 18
+        set guifont=Source\ Code\ Pro\ Medium\ 12,Andale\ Mono\ Regular\ 16,Menlo\ Regular\ 15,Consolas\ Regular\ 16,Courier\ New\ Regular\ 18
         set linespace=-1 " Font rendering isn't as nice as windows at 8, but we can remove 2px from each line to fit more lines on the screen
         if has("gui_mac")
             set guifont=Source\ Code\ Pro:h8,Andale\ Mono\ Regular:h16,Menlo\ Regular:h15,Consolas\ Regular:h16,Courier\ New\ Regular:h18
