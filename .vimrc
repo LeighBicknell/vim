@@ -1012,41 +1012,54 @@ endif
         let g:syntastic_auto_jump=0
         let g:syntastic_auto_loc_list=1
 
-        if filereadable("/usr/local/bin/scss-lint")
-            let g:syntastic_scss_scss_lint_exec="/usr/local/bin/scss-lint"
-            let g:syntastic_scss_checkers=['scss_lint']
-        endif
+        " SCSS {
 
-        let g:syntastic_php_phpcs_args="--standard=PSR2"
-        let g:syntastic_php_phpmd_post_args="~/.phpmd/ruleset.xml"
+            " Doesn't seem to work with sassc for some reason, use sass for now
+            " remember: 
+            " sudo apt-get install ruby-dev 
+            " sudo gem install --no-user-dir compass
+            let g:syntastic_scss_scss_sass_exe="/usr/local/bin/sass"
+            let g:syntastic_scss_scss_lint_exe="/usr/local/bin/scss-lint"
 
-        let g:syntastic_php_checkers = ['php']
-        let g:syntastic_php_error_checkers = ['php']
-        let g:syntastic_php_syntax_checkers = ['php', 'phpcs', 'phpmd']
-        let g:syntastic_wordpress_checkers = ['php']
-        let g:syntastic_mode_map = { 'mode': 'active',
+            let g:syntastic_scss_checkers=['scss_lint', 'sass']
+            let g:syntastic_scss_error_checkers = ['sass']
+            let g:syntastic_scss_syntax_checkers = ['scss_lint', 'sass']
+        " }
+
+
+        " PHP {
+            let g:syntastic_php_phpcs_args="--standard=PSR2"
+            let g:syntastic_php_phpmd_post_args="~/.phpmd/ruleset.xml"
+
+            let g:syntastic_php_checkers = ['php']
+            let g:syntastic_php_error_checkers = ['php']
+            let g:syntastic_php_syntax_checkers = ['php', 'phpcs', 'phpmd']
+            let g:syntastic_wordpress_checkers = ['php']
+        " }
+        "
+        let g:syntastic_mode_map = { 'mode': 'passive',
                                    \ 'active_filetypes': ['php'],
-                                   \ 'passive_filetypes': ['css', 'scss'] }
-        command! SErrors call SErrors()
-        function! SErrors()
-            let g:syntastic_old_php_checkers = g:syntastic_php_checkers
-            let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
-            let g:syntastic_aggregate_errors = 1
-            execute "SyntasticCheck"
-            let g:syntastic_php_checkers = g:syntastic_old_php_checkers
-        endfunction
+                                   \ 'passive_filetypes': [] }
+
         nmap <Leader>sc :SyntasticCheck<CR>
-        command! SyntasticSyntaxMode call SyntasticSyntaxMode()
+
+        " Switch to 'syntax mode' (Custom mode that checks syntax also)
         function! SyntasticSyntaxMode()
+            let g:syntastic_scss_checkers = g:syntastic_scss_syntax_checkers
             let g:syntastic_php_checkers = g:syntastic_php_syntax_checkers
             let g:syntastic_aggregate_errors = 1
         endfunction
+        command! SyntasticSyntaxMode call SyntasticSyntaxMode()
         nmap <Leader>ss :SyntasticSyntaxMode<CR>
-        command! SyntasticErrorMode call SyntasticErrorMode()
+
+        " Switch to 'error mode' (custom mode to only check for critical 
+        " errors)
         function! SyntasticErrorMode()
             let g:syntastic_php_checkers = g:syntastic_php_error_checkers
+            let g:syntastic_scss_checkers = g:syntastic_scss_error_checkers
             let g:syntastic_aggregate_errors = 0
         endfunction
+        command! SyntasticErrorMode call SyntasticErrorMode()
         nmap <Leader>se :SyntasticErrorMode<CR>
     " }
 

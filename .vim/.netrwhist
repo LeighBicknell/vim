@@ -1,9 +1,2 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =7
-let g:netrw_dirhist_1='/home/leigh/config/.passwd'
-let g:netrw_dirhist_2='/media/ol/y/leighb/wp/wordpress/wp-content/plugins/dams-connector-fndtn/bin'
-let g:netrw_dirhist_3='/home/leigh/ol-local/the-postal-museum/wp-content/themes/the-postal-museum/static/fonts'
-let g:netrw_dirhist_4='/media/ol/local/Downloads'
-let g:netrw_dirhist_5='/media/ol/y/suffolkarchives/wordpress'
-let g:netrw_dirhist_6='/media/ol/y/suffolkarchives/wordpress/wp-content/plugins/collections-base/com/getrecord'
-let g:netrw_dirhist_7='/home/leigh/tmp'
+let g:netrw_dirhist_cnt =0
