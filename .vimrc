@@ -716,7 +716,6 @@ endif
                     \-not -path "*/node_modules/*" 
                     \&& cscope -b -i ./cscope.files -f ./cscope.out 
                     \&& rm ./cscope.files -f<CR> 
-                    \:cs reset<CR>
 
         "tags
         nnoremap <F11> :Start -title='ctags-php' ctags-php -R 
