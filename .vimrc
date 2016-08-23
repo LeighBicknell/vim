@@ -142,7 +142,7 @@ endif
             Bundle 'ap/vim-css-color'
             if has('unix')
                 " Requires unix system
-                Bundle 'zenbro/mirror.vim'
+                Bundle 'FlickerBean/mirror.vim'
             endif
         endif
     " }
@@ -886,6 +886,10 @@ endif
 
     " JSON {
         nmap <leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
+    " }
+    
+    " mirror.vim {
+        let g:mirror#spawn_command = ':Start '
     " }
 
     " NerdTree {
