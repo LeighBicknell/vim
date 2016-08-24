@@ -890,6 +890,12 @@ endif
     
     " mirror.vim {
         let g:mirror#spawn_command = ':Start '
+        nnoremap <leader>mp :MirrorPush<cr>
+        nnoremap <leader>mg :MirrorPull<cr>
+        nnoremap <leader>md :MirrorDiff<cr>
+        nnoremap <leader>mc :MirrorConfig<cr>
+        nnoremap <leader>mr :MirrorConfigReload<cr>
+        nnoremap <leader>ms :MirrorSSH<cr>
     " }
 
     " NerdTree {
@@ -1394,9 +1400,9 @@ endif
         exe 'hide buf' markedBuf
     endfunction
 
-    nmap <silent> <leader>mw :call MarkWindowSwap()<CR>
-    nmap <silent> <leader>pw :call DoWindowSwap()<CR>
-        "eg : ,mw to mark window ,pw to swap with marked window
+    nmap <silent> <leader>wm :call MarkWindowSwap()<CR>
+    nmap <silent> <leader>ws :call DoWindowSwap()<CR>
+        "eg : ,wm to mark window ,ws to swap with marked window
     " }
 
     " Fix grep (vimgrep too slooooow!)
