@@ -757,6 +757,7 @@ endif
     " }
 
     " CommandT {
+        set wildignore=*.0,*.obj,*/.git/*,*/.svn/*,*/_archive/*,*/_archived/*,*/node_modules/*,*/bower_components/*,cscope.out,tags,package.json
         " Use find tool for file searching
         let g:CommandTFileScanner = 'find'
         " Start searching at current directory
