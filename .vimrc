@@ -899,7 +899,7 @@ endif
         nnoremap <leader>mr :MirrorConfigReload<cr>
         nnoremap <leader>ms :MirrorSSH<cr>
         " Mirror diff quit (diffoff, buffer delete, window quit, diffoff in original window
-        nnoremap <leader>mdq :diffoff<cr>:Bdelete<cr>:wq<cr>:diffoff<cr>
+        nnoremap <leader>dq :diffoff<cr>:Bdelete<cr>:wq<cr>:diffoff<cr>
     " }
 
     " NerdTree {
