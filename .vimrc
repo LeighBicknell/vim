@@ -127,7 +127,7 @@ endif
             Bundle 'mattn/webapi-vim'
             Bundle 'scrooloose/nerdcommenter'
             Bundle 'godlygeek/tabular'
-            Bundle 'vcscommand.vim'
+            "Bundle 'vcscommand.vim'
             Bundle 'vim-scripts/cscope_macros.vim'
             Bundle 'Valloric/YouCompleteMe'
             Bundle 'ap/vim-css-color'
