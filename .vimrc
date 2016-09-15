@@ -82,15 +82,6 @@ endif
         Bundle 'MarcWeber/vim-addon-mw-utils'
         Bundle 'tomtom/tlib_vim'
         Bundle 'Shougo/vimproc.vim'
-        "  if executable('ack-grep')
-        "       let g:ackprg="ack-grep -H --nocolor --nogroup --column"
-        "       Bundle 'mileszs/ack.vim'
-        "   elseif executable('ack')
-        "       Bundle 'mileszs/ack.vim'
-        "   elseif executable('ag')
-        "       Bundle 'mileszs/ack.vim'
-        "       let g:ackprg = 'ag --nogroup --nocolor --column --smart-case --path-to-agignore '.s:editor_root.'/.agignore'
-        "   endif
         Bundle 'mhinz/vim-grepper'
     " }
 
@@ -529,6 +520,9 @@ endif
     set smartcase                   " Case sensitive when uc present
     set wildmenu                    " Show list instead of just completing
     set wildmode=longest,list,full  " Command <Tab> completion, list matches, then longest common part, then all.
+    " adding */.git/ to wildignore breaks fugitive Gdiff command, instead add 
+    " it to command-t and .agignore
+    set wildignore=*.0,*.obj,*/.svn/*,*/_archive/*,*/_archived/*,*/node_modules/*,*/bower_components/*,cscope.out,tags,package.json
     set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
     "set scrolljump=5                " Lines to scroll when cursor leaves screen
     "set scrolloff=3                 " Minimum lines to keep above and below cursor
@@ -714,6 +708,7 @@ endif
                     \-not -path "*/.git/*" 
                     \-not -path "*/.svn/*" 
                     \-not -path "*/node_modules/*" 
+                    \-not -path "*/bower_components/*" 
                     \&& cscope -b -i ./cscope.files -f ./cscope.out 
                     \&& rm ./cscope.files -f<CR> 
 
@@ -727,6 +722,7 @@ endif
                     \--exclude="_archive" 
                     \--exclude="_archived" 
                     \--exclude="node_modules" 
+                    \--exclude="bower_components" 
                     \--tag-relative=yes 
                     \--totals=yes<CR>
 
@@ -756,9 +752,8 @@ endif
         nmap <C-Space><C-Space>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>
     " }
 
-    " CommandT {
-    " adding */.git/ to wildignore breaks fugitive Gdiff command
-        set wildignore=*.0,*.obj,*/.svn/*,*/_archive/*,*/_archived/*,*/node_modules/*,*/bower_components/*,cscope.out,tags,package.json
+    " Command-T {
+        let g:CommandTWildIgnore=&wildignore . ",*/.git/*"
         " Use find tool for file searching
         let g:CommandTFileScanner = 'find'
         " Start searching at current directory
@@ -870,15 +865,15 @@ endif
           \   nnoremap <buffer> .. :edit %:h<CR> |
           \ endif
     " }
-    
-    " Grepper {
+
+    " vim-grepper {
          " Mimic :grep and make ag the default tool.
         let g:grepper = {
             \ 'tools': ['ag', 'git', 'grep'],
             \ 'open':  1,
             \ 'jump':  0,
             \ 'ag': {
-            \   'grepprg': 'ag --vimgrep --smart-case --path-to-agignore="'.$editor_root.'/.agignore"',
+            \   'grepprg': 'ag --vimgrep --smart-case',
             \   }
             \ }
         nnoremap <leader>git :Grepper -tool git -noswitch<cr>
@@ -889,7 +884,7 @@ endif
     " JSON {
         nmap <leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
     " }
-    
+
     " mirror.vim {
         let g:mirror#spawn_command = ':Start '
         nnoremap <leader>mp :MirrorPush<cr>
