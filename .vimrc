@@ -1044,12 +1044,9 @@ endif
             let g:syntastic_php_syntax_checkers = ['php', 'phpcs', 'phpmd']
             let g:syntastic_wordpress_checkers = ['php']
         " }
-        
-        " JS {
-            let g:syntastic_javascript_checkers['jshint']
-        " }
+
         let g:syntastic_mode_map = { 'mode': 'passive',
-                                   \ 'active_filetypes': ['php', 'javascript'],
+                                   \ 'active_filetypes': ['php', 'javascript', 'markdown'],
                                    \ 'passive_filetypes': [] }
 
         nmap <Leader>sc :SyntasticCheck<CR>
