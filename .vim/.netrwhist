@@ -1,5 +1,5 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =8
+let g:netrw_dirhist_cnt =9
 let g:netrw_dirhist_1='/media/ol/y/shropshirearchives/wordpress/wp-content/plugins/collections-base'
 let g:netrw_dirhist_2='/usr/share/bash-completion'
 let g:netrw_dirhist_3='/usr/share/bash-completion/completions'
@@ -8,3 +8,4 @@ let g:netrw_dirhist_5='scp://postalheritage_wp/~/wordpress/wp-content/'
 let g:netrw_dirhist_6='scp://postalheritage_wp//'
 let g:netrw_dirhist_7='scp://postalheritage_wp//home/'
 let g:netrw_dirhist_8='scp://postalheritage_wp/~/wordpress/wp-content/themes/postal/'
+let g:netrw_dirhist_9='/home/leigh'
