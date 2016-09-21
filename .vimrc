@@ -133,7 +133,7 @@ endif
             Bundle 'ap/vim-css-color'
             if has('unix')
                 " Requires unix system
-                Bundle 'FlickerBean/mirror.vim'
+                Bundle 'zenbro/mirror.vim'
             endif
         endif
     " }
