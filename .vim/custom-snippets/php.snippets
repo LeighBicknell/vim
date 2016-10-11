@@ -6,11 +6,11 @@ ${VISUAL}$0
 ?>
 endsnippet
 
-snippet il?? "<?php ?>  inline" !i
+snippet ??il "<?php ?>  inline" !i
 <?php ${VISUAL}$1; $2?>$0
 endsnippet
 
-snippet il??e "<?php echo ?>  inline" !i
+snippet ??ile "<?php echo ?>  inline" !i
 <?php echo ${VISUAL}$1; $2?>$0
 endsnippet
 
@@ -22,7 +22,7 @@ snippet tre "Inline translation echo" !i
 _te('[${VISUAL}$1]')$0
 endsnippet
 
-snippet iltre "Inline translation echo" !i
+snippet treil "Inline translation echo" !i
 <?php _te('[${VISUAL}$1]'); ?>$0
 endsnippet
 
@@ -276,13 +276,13 @@ if (${VISUAL}${1}) {
 }$0
 endsnippet
 
-snippet ilif "if inline" !
+snippet ifil "if inline" !
 <?php if (${1:/* condition */}) : ?>
 ${VISUAL}${2}
 <?php endif; ?>$0
 endsnippet
 
-snippet ilifvc "if inline" !
+snippet ifilvc "if inline" !
 <?php if (${VISUAL}${1}) : ?>
     ${2}
 <?php endif; ?>$0
@@ -312,7 +312,7 @@ if (${1:/* condition */}) {
 }$0
 endsnippet
 
-snippet ilifel "If Else Inline"
+snippet ifelil "If Else Inline"
 <?php if (${1:/* condition */}): ?>
     ${VISUAL}${2}
 <?php else: ?>
@@ -320,7 +320,7 @@ snippet ilifel "If Else Inline"
 <?php endif; ?>$0
 endsnippet
 
-snippet ilifelvc "If Else Inline visual condition wrap"
+snippet ifelilvc "If Else Inline visual condition wrap"
 <?php if (${VISUAL}${1}): ?>
     ${2:<!-- html... -->}
 <?php else: ?>
@@ -328,7 +328,7 @@ snippet ilifelvc "If Else Inline visual condition wrap"
 <?php endif; ?>$0
 endsnippet
 
-snippet ilifelve "If Else Inline visual else wrap"
+snippet ifelilve "If Else Inline visual else wrap"
 <?php if (${1:/* condition */}): ?>
     ${2:<!-- html... -->}
 <?php else: ?>
@@ -348,13 +348,13 @@ elseif (${VISUAL}${1:/* condition */}) {
 }$0
 endsnippet
 
-snippet ilelif "elseif inline" !
+snippet elifil "elseif inline" !
 <?php elseif (${1}) : ?>
     ${VISUAL}${2}
 <?php endif; ?>$0
 endsnippet
 
-snippet ilelifvc "elseif inline" !
+snippet elifilvc "elseif inline" !
 <?php elseif (${VISUAL}${1}) : ?>$0
 endsnippet
 
@@ -364,11 +364,11 @@ else {
 }$0
 endsnippet
 
-snippet ilel "else inline" !
+snippet elil "else inline" !
 <?php else : ?>$0
 endsnippet
 
-snippet ileif "endif inline" !
+snippet eifil "endif inline" !
 <?php endif; ?>$0
 endsnippet
 
@@ -378,13 +378,13 @@ for ($${2:i} = 0; $$2 < ${1:count}; $$2${3:++}) {
 }$0
 endsnippet
 
-snippet ilfor "for inline" !
+snippet foril "for inline" !
 <?php for ($${2:i} = 0; $$2 < ${1:count}; $$2${3:++}) : ?>
     ${VISUAL}${4}
 <?php endfor; ?>$0
 endsnippet
 
-snippet ilefor "endfor inline" !
+snippet eforil "endfor inline" !
 <?php endfor; ?>$0
 endsnippet
 
@@ -394,7 +394,7 @@ foreach ($${1:variable} as $${2:v}) {
 }$0
 endsnippet
 
-snippet ilfore "Foreach loop inline" !
+snippet foreil "Foreach loop inline" !
 <?php foreach ($${1:variable} as $${2:v}) : ?>
     ${VISUAL}${3}
 <?php endforeach; ?>$0
@@ -406,13 +406,13 @@ foreach ($${1:variable} as $${2:k} => $${3:v}) {
 }$0
 endsnippet
 
-snippet ilforek "foreach key inline" !
+snippet forekil "foreach key inline" !
 <?php foreach ($${1:variable} as $${2:k} => $${3:v}) : ?>
     ${VISUAL}
 <?php endforeach; ?>$0
 endsnippet
 
-snippet ilefore "endfor inline" !
+snippet eforeil "endforeach inline" !
 <?php endforeach; ?>$0
 endsnippet
 
@@ -442,19 +442,19 @@ while (${VISUAL}${1})
 }$0
 endsnippet
 
-snippet ilwhile "while inline" !
+snippet whileil "while inline" !
 <?php while (${1:/* condition */}) : ?>
     ${VISUAL}
 <?php endwhile; ?>$0
 endsnippet
 
-snippet ilwhilevc "while inline visual condition wrap" !
+snippet whileilvc "while inline visual condition wrap" !
 <?php while (${VISUAL}${1}) : ?>
     ${2}
 <?php endwhile; ?>$0
 endsnippet
 
-snippet ilewhile "end while inline" !
+snippet ewhileil "end while inline" !
 <?php endwhile; ?>$0
 endsnippet
 
