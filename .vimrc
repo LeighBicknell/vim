@@ -867,11 +867,13 @@ endif
     " }
 
     " vim-grepper {
-         " Mimic :grep and make ag the default tool.
+         " Mimic :grep and make ag the default tool. Also ,G switches tool (I 
+         " want my auto completion!)
         let g:grepper = {
             \ 'tools': ['ag', 'git', 'grep'],
             \ 'open':  1,
             \ 'jump':  0,
+            \ 'next_tool': '<leader>G',
             \ 'ag': {
             \   'grepprg': 'ag --vimgrep --smart-case',
             \   }
@@ -879,6 +881,8 @@ endif
         nnoremap <leader>git :Grepper -tool git -noswitch<cr>
         nnoremap <leader>ag  :Grepper -tool ag -noswitch -cword<cr>
         nnoremap <leader>*   :Grepper -tool ag -noswitch -cword -noprompt<cr>
+        nnoremap <leader>G :Grepper -tool ag -noswitch -cword<cr>
+        cnoreabbrev Ag GrepperAg
     " }
 
     " JSON {
