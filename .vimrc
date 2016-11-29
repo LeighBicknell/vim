@@ -683,7 +683,7 @@ endif
 
     " Cscope {
         set cst
-        set cscopequickfix="s-,c-,d-,i-,t-,e-"
+        set cscopequickfix=s-,c-,d-,i-,t-,e-
 
         if filereadable("cscope.out")
             "shut up msgs
