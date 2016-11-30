@@ -429,15 +429,13 @@ do {
 endsnippet
 
 snippet while "while" !
-while (${1:/* condition */})
-{
+while (${1:/* condition */}) {
     ${VISUAL}${2}
 }$0
 endsnippet
 
 snippet whilevc "while visual condition wrap" !
-while (${VISUAL}${1})
-{
+while (${VISUAL}${1}) {
     ${2:// code...}
 }$0
 endsnippet
@@ -459,8 +457,7 @@ snippet ewhileil "end while inline" !
 endsnippet
 
 snippet switch "switch" !
-switch(${1:$var})
-{
+switch(${1:$var}) {
     case '${2}':
         ${3:// Code}
         break;
