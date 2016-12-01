@@ -1494,7 +1494,7 @@ endif
         set ft=
 
         " Execute external formatter
-        exe ":silent %!python -m json.tool"
+        exe ":silent '<,'>!python -m json.tool"
 
         " Restore the file type
         exe "set ft=" . l:origft
