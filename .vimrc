@@ -69,7 +69,7 @@ endif
         " Add PHPMAN to path
         let &rtp = &rtp . ',' . s:editor_root . '/vim-PHPMAN'
         " add Vundle to path
-        let &rtp = &rtp . ',' . s:editor_root . '/bundle/vundle'
+        let &rtp = &rtp . ',' . s:editor_root . '/bundle/Vundle.vim'
         call vundle#rc(s:editor_root . '/bundle')
     " }
 
@@ -78,7 +78,7 @@ endif
 " Bundles {
 
     " Deps {
-        Bundle 'gmarik/vundle'
+        Bundle 'VundleVim/Vundle.vim'
         Bundle 'MarcWeber/vim-addon-mw-utils'
         Bundle 'tomtom/tlib_vim'
         Bundle 'Shougo/vimproc.vim'
