@@ -149,7 +149,9 @@ endif
             Bundle 'arnaud-lb/vim-php-namespace'
             Bundle 'rayburgemeestre/phpfolding.vim'
             Bundle 'FlickerBean/vim-php-refactoring'
-            Bundle 'joonty/vim-phpunitqf'
+            "Ubuntu 16.04 vim isn't compiled with Python2 support, 
+            "vim-phpunitqf needs it
+            "Bundle 'joonty/vim-phpunitqf'
             Bundle 'stephpy/vim-php-cs-fixer'
             " Wordpress
             " Bundle 'dsawardekar/wordpress.vim'
@@ -1109,7 +1111,7 @@ endif
         let g:UltiSnipsJumpBackwardTrigger="<S-C-CR>"
         let g:UltiSnipsSnippetsDir=$editor_root . "/custom-snippets"
         let g:UltiSnipsEditSplit='vertical'
-        let g:UltiSnipsUsePythonVersion=2
+        let g:UltiSnipsUsePythonVersion=3
     " }
 
     " UndoTree {
@@ -1145,6 +1147,7 @@ endif
         let g:ycm_collect_identifiers_from_comments_and_strings = 1
         " Get php main functions/keywords from syntax file
         let g:ycm_seed_identifiers_with_syntax = 1
+        let g:ycm_disable_for_files_larger_than_kb = 950
         " }
 
 " }
