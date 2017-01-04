@@ -1111,7 +1111,7 @@ endif
         let g:UltiSnipsJumpBackwardTrigger="<S-C-CR>"
         let g:UltiSnipsSnippetsDir=$editor_root . "/custom-snippets"
         let g:UltiSnipsEditSplit='vertical'
-        let g:UltiSnipsUsePythonVersion=3
+        "let g:UltiSnipsUsePythonVersion=3
     " }
 
     " UndoTree {
