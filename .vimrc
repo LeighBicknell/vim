@@ -909,7 +909,7 @@ endif
         nmap cot :NERDTreeToggle<CR>
         nmap coT :NERDTreeFind<CR>
 
-        let NERDTreeShowBookmarks=1
+        let NERDTreeShowBookmarks=0
         let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
         let NERDTreeChDirMode=0
         let NERDTreeMouseMode=1
@@ -928,6 +928,13 @@ endif
         " vcscommand doesn't work on directories in NERDTree
         let NERDTreeHijackNetrw=0
         let g:nerdtree_tabs_open_on_gui_startup=0
+
+        " Force NERDTree to open file in current tab regardless of if it is 
+        " already open in another.
+        function NERDTreeMyOpenFile(node)
+            call a:node.activate({'reuse': 'currenttab', 'where': 'p'})
+        endfunction
+        autocmd VimEnter * :call NERDTreeAddKeyMap({ 'key': 'o', 'callback': 'NERDTreeMyOpenFile', 'scope': 'FileNode', 'override': 1 })
     " }
 
     " OmniComplete {
