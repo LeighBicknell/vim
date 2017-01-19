@@ -106,7 +106,7 @@ endif
             Bundle 'wincent/Command-T'
             "Bundle 'oplatek/Conque-Shell' "Replaced by dispatch
             Bundle 'tpope/vim-dispatch'
-            Bundle 'will133/vim-dirdiff'
+            Bundle 'FlickerBean/vim-dirdiff'
             " Open browser
             Bundle 'tyru/open-browser.vim'
         endif
