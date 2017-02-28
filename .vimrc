@@ -524,7 +524,7 @@ endif
     set wildmode=longest,list,full  " Command <Tab> completion, list matches, then longest common part, then all.
     " adding */.git/ to wildignore breaks fugitive Gdiff command, instead add 
     " it to command-t and .agignore
-    set wildignore=*.0,*.obj,*/.svn/*,*/_archive/*,*/_archived/*,*/node_modules/*,*/bower_components/*,cscope.out,tags,package.json,*.DS_Store
+    set wildignore=*.0,*.obj,*/.svn/*,*/_archive/*,*/_archived/*,*/node_modules/*,*/bower_components/*,cscope.out,tags,*.DS_Store
     set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
     "set scrolljump=5                " Lines to scroll when cursor leaves screen
     "set scrolloff=3                 " Minimum lines to keep above and below cursor
@@ -983,12 +983,13 @@ endif
         " use ,pcd for PhpCsFixerFixDirectory and ,pcf for PhpCsFixerFixFile
         let g:php_cs_fixer_level = "psr2"                 " which level ?
         let g:php_cs_fixer_config = "default"             " configuration
+        let g:php_cs_fixer_rules = "@PSR2"                " options: --rules (default:@PSR2)
         let g:php_cs_fixer_php_path = "php"               " Path to PHP
         " If you want to define specific fixers:
-        let g:php_cs_fixer_fixers_list = "linefeed,short_tag,indentation"
+        " let g:php_cs_fixer_fixers_list = "linefeed,short_tag,indentation"  " deprecated?
         let g:php_cs_fixer_enable_default_mapping = 1     " Enable the mapping by default (<leader>pcd)
         let g:php_cs_fixer_dry_run = 0                    " Call command with dry-run option
-        let g:php_cs_fixer_verbose = 0                    " Return the output of command if 1, else an inline information.
+        let g:php_cs_fixer_verbose = 1                    " Return the output of command if 1, else an inline information.
     " }
 
     " phpfolding.vim {
