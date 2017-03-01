@@ -1013,6 +1013,24 @@ endif
         let g:pymode_utils_whitespaces = 0
         let g:pymode_options = 0
     " }
+    
+    " PhpNamespace {
+        let g:php_namespace_sort_after_insert = 1
+
+        function! IPhpInsertUse()
+            call PhpInsertUse()
+            call feedkeys('a',  'n')
+        endfunction
+        autocmd FileType php inoremap <Leader>ni <Esc>:call IPhpInsertUse()<CR>
+        autocmd FileType php noremap <Leader>ni :call PhpInsertUse()<CR>
+
+        function! IPhpExpandClass()
+            call PhpExpandClass()
+            call feedkeys('a', 'n')
+        endfunction
+        autocmd FileType php inoremap <Leader>ne <Esc>:call IPhpExpandClass()<CR>
+        autocmd FileType php noremap <Leader>ne :call PhpExpandClass()<CR>
+    " }
 
     " PythonMode {
         " Disable if python support not present
@@ -1123,8 +1141,8 @@ endif
     " }
 
     " UndoTree {
-        nnoremap <Leader>u :UndotreeToggle<CR>
-        nmap cou :UndotreeToggle<CR>
+        "nnoremap <Leader>u :UndotreeToggle<CR>
+        nnoremap cou :UndotreeToggle<CR>
         " If undotree is opened, it is likely one wants to interact with it.
         let g:undotree_SetFocusWhenToggle=1
     " }
