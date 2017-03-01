@@ -906,8 +906,8 @@ endif
     " }
 
     " NerdTree {
-        nmap cot :NERDTreeToggle<CR>
-        nmap coT :NERDTreeFind<CR>
+        nmap <leader>ot :NERDTreeToggle<CR>
+        nmap <leader>oT :NERDTreeFind<CR>
 
         let NERDTreeShowBookmarks=0
         let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
@@ -1141,8 +1141,7 @@ endif
     " }
 
     " UndoTree {
-        "nnoremap <Leader>u :UndotreeToggle<CR>
-        nnoremap cou :UndotreeToggle<CR>
+        nnoremap <Leader>ou :UndotreeToggle<CR>
         " If undotree is opened, it is likely one wants to interact with it.
         let g:undotree_SetFocusWhenToggle=1
     " }
