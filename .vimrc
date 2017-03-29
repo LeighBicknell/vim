@@ -131,6 +131,7 @@ endif
             Bundle 'vim-scripts/cscope_macros.vim'
             Bundle 'Valloric/YouCompleteMe'
             Bundle 'ap/vim-css-color'
+            Bundle 'majutsushi/tagbar'
             if has('unix')
                 " Requires unix system
                 Bundle 'zenbro/mirror.vim'
@@ -717,8 +718,9 @@ endif
                     \&& rm ./cscope.files -f<CR> 
 
         "tags
-        nnoremap <F11> :Start -title='ctags-php' ctags-php -R 
-                    \--fields=+aimS 
+        nnoremap <F11> :Start -title='ctags' ctags -R 
+                    \--php-kinds=cfit 
+                    \--fields=+aimlS 
                     \--languages=php 
                     \--exclude="\.svn" 
                     \--exclude="\.git" 
@@ -906,8 +908,8 @@ endif
     " }
 
     " NerdTree {
-        nmap <leader>ot :NERDTreeToggle<CR>
-        nmap <leader>oT :NERDTreeFind<CR>
+        nmap <leader>on :NERDTreeToggle<CR>
+        nmap <leader>oN :NERDTreeFind<CR>
 
         let NERDTreeShowBookmarks=0
         let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
@@ -1116,6 +1118,10 @@ endif
         vmap <Leader>a@p :Tabularize /@\S\{-} \S\{-}\zs \S\{-} /l0<CR>
         nmap <Leader>ap :Tabularize /,\zs /l0r0<CR>
         vmap <Leader>ap :s/,\([^ ]\)/, \1/g<CR>:Tabularize /,\zs /l0r0<CR>
+    " }
+
+    " Tagbar {
+        nmap <Leader>ot :TagbarToggle<CR>
     " }
 
     " Ultisnips {
