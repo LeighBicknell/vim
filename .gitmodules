@@ -15,7 +15,7 @@
 	url = https://github.com/mattn/emmet-vim.git
 [submodule ".vim/bundle/matchit.zip"]
 	path = .vim/bundle/matchit.zip
-	url = https://github.com/vim-scripts/matchit.zip.git
+	url = https://github.com/benjifisher/matchit.zip.git
 [submodule ".vim/bundle/mirror.vim"]
 	path = .vim/bundle/mirror.vim
 	url = https://github.com/zenbro/mirror.vim.git
@@ -54,7 +54,7 @@
 	url = https://github.com/godlygeek/tabular.git
 [submodule ".vim/bundle/tcd.vim"]
 	path = .vim/bundle/tcd.vim
-	url = https://github.com/vim-scripts/tcd.vim.git
+	url = https://github.com/FlickerBean/tcd.vim.git
 [submodule ".vim/bundle/tlib_vim"]
 	path = .vim/bundle/tlib_vim
 	url = https://github.com/tomtom/tlib_vim.git

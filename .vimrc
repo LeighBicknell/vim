@@ -94,7 +94,7 @@ endif
             Bundle 'tpope/vim-abolish.git'
             Bundle 'tpope/vim-unimpaired'
             Bundle 'tpope/vim-eunuch'
-            Bundle 'matchit.zip'
+            Bundle 'benjifisher/matchit.zip'
             Bundle 'mbbill/undotree'
             Bundle 'nathanaelkane/vim-indent-guides'
             Bundle 'scrooloose/nerdtree'
