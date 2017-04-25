@@ -802,47 +802,9 @@ endif
         "let g:dispatch_compilers =
         nnoremap <Leader>D :Dispatch<CR>
         nnoremap <Leader>nbb :Start npm run build<CR>
-        nnoremap <Leader>nfb :Start npm run fastbuild<CR>
         nnoremap <Leader>nbc :Start npm run build:css<CR>
-        nnoremap <Leader>nfc :Start npm run fastbuild:css<CR>
         nnoremap <Leader>nbj :Start npm run build:js<CR>
         nnoremap <Leader>nbw :Start npm run watch<CR>
-    " }
-
-    " eclim {
-        "command! -range -nargs=* Phpman call eclim#web#SearchEngine('http://uk3.php.net/results.php?l=en&p=all&q=<query>', <q-args>, <line1>, <line2>)
-        "command! -range -nargs=* Google call eclim#web#SearchEngine('http://www.google.com/search?q=<query>', <q-args>, <line1>, <line2>)
-        "let g:EclimPhpIndentDisabled=1
-        "let g:EclimCssIndentDisabled=1
-        "let g:EclimJavascriptIndentDisabled=1
-        "let g:EclimHtmlIndentDisabled=1
-        "let g:EclimXmlIndentDisabled=1
-
-        "let g:EclimFileTypeValidate=0
-        "let g:EclimPhpValidate=0
-        "let g:EclimPhpHtmlValidate=0
-        "let g:EclimCssValidate=0
-        "let g:EclimHtmlValidate=0
-        "let g:EclimLogLevel=0
-        "let g:EclimLocateFileDefaultAction='edit'
-        "let g:EclimMenus=0
-        "let g:EclimProjectTabTreeAutoOpen=0
-        "let g:EclimProjectTreeExpandPathOnOpen=1
-        "let g:EclimCompletionMethod = 'omnifunc'
-        " Turned off because if eclipse closes and re-opens, there's no way to
-        " reconntect nailgun without closing and reopening vim :/
-        "let g:EclimNailgunKeepAlive=1
-        "let g:EclimBufferTabTracking=0
-
-        " Make eclim update eclipses local history (:History command)
-        " Turned this off, as I have persistant undo and undo tree, so .....
-        " Note to self: I turned this off because DLTK indexing blocks saves
-        " until it's finished!
-        "let g:EclimKeepLocalHistory=1
-
-        "nmap cop :ProjectTreeToggle<CR>
-        "cabbr pt ProjectTab
-        "cabbr lf LocateFile
     " }
 
     " Emmet {
@@ -918,16 +880,6 @@ endif
         let NERDTreeShowHidden=0
         let NERDTreeKeepTreeInNewTab=0
         let NERDTreeHighlightCursorline=0
-        "Stop NERDTree hijacking netRW until NERDTree's root opening path is
-        "fixed.
-        " (I manually fixed this )
-            " lib/nerdtree/path.vim
-            " function! s:Path._strForEdit()
-            "   ...
-            "   ...
-            "   return fnamemodify(p, ':.') " This line
-            " endfunction
-        " vcscommand doesn't work on directories in NERDTree
         let NERDTreeHijackNetrw=0
         let g:nerdtree_tabs_open_on_gui_startup=0
 
