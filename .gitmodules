@@ -142,3 +142,6 @@
 [submodule ".vim/bundle/tagbar"]
 	path = .vim/bundle/tagbar
 	url = https://github.com/majutsushi/tagbar.git
+[submodule ".vim/bundle/QFEnter"]
+	path = .vim/bundle/QFEnter
+	url = https://github.com/yssl/QFEnter

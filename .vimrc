@@ -109,6 +109,8 @@ endif
             Bundle 'FlickerBean/vim-dirdiff'
             " Open browser
             Bundle 'tyru/open-browser.vim'
+            " Open items from quickfix wherever i want!
+            Bundle 'yssl/QFEnter'
         endif
     " }
 
