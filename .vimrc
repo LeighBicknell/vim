@@ -843,12 +843,13 @@ endif
             \ 'jump':  0,
             \ 'next_tool': '<leader>G',
             \ 'ag': {
-            \   'grepprg': 'ag --vimgrep --smart-case',
+            \   'grepprg': 'ag --vimgrep',
+            \   'wordanchors': ['', ''],
             \   }
             \ }
         nnoremap <leader>git :Grepper -tool git -noswitch<cr>
-        nnoremap <leader>ag  :Grepper -tool ag -noswitch -cword<cr>
-        nnoremap <leader>*   :Grepper -tool ag -noswitch -cword -noprompt<cr>
+        nnoremap <leader>ag :Grepper -tool ag -noswitch -cword<cr>
+        nnoremap <leader>* :Grepper -tool ag -noswitch -cword -noprompt<cr>
         nnoremap <leader>G :Grepper -tool ag -noswitch -cword<cr>
         cnoreabbrev Ag GrepperAg
     " }
