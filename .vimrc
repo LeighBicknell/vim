@@ -99,7 +99,7 @@ endif
             Bundle 'nathanaelkane/vim-indent-guides'
             Bundle 'scrooloose/nerdtree'
             Bundle 'Tab-Name'
-            Bundle 'vim-scripts/tcd.vim'
+            Bundle 'FlickerBean/tcd.vim'
             Bundle 'SirVer/ultisnips'
             Bundle 'mattn/emmet-vim'
             Bundle 'moll/vim-bbye'
