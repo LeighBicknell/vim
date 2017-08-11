@@ -145,3 +145,6 @@
 [submodule ".vim/bundle/QFEnter"]
 	path = .vim/bundle/QFEnter
 	url = https://github.com/yssl/QFEnter
+[submodule ".vim/bundle/csv.vim"]
+	path = .vim/bundle/csv.vim
+	url = https://github.com/chrisbra/csv.vim
