@@ -894,7 +894,7 @@ endif
 
         " Force NERDTree to open file in current tab regardless of if it is 
         " already open in another.
-        function NERDTreeMyOpenFile(node)
+        function! NERDTreeMyOpenFile(node)
             call a:node.activate({'reuse': 'currenttab', 'where': 'p'})
         endfunction
         autocmd VimEnter * :call NERDTreeAddKeyMap({ 'key': 'o', 'callback': 'NERDTreeMyOpenFile', 'scope': 'FileNode', 'override': 1 })
@@ -1584,3 +1584,6 @@ endif
         \ setlocal nobin
     augroup END
 " }
+if filereadable(expand("~/.vimrc-local"))
+    source ~/.vimrc-local
+endif
