@@ -543,6 +543,7 @@ endif
     set timeout                     " Wait for timeouts
     set timeoutlen=2000             " Wait 2 seconds for mapping timeouts (ysiw etc)
     set ttimeoutlen=100             " Wait 100ms for keycode mappings
+    set updatetime=500              " Time to wait before updating plugins
 
 " }
 
