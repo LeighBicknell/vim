@@ -533,7 +533,7 @@ endif
     set wildmode=longest,list,full  " Command <Tab> completion, list matches, then longest common part, then all.
     " adding */.git/ to wildignore breaks fugitive Gdiff command, instead add 
     " it to command-t and .agignore
-    set wildignore=*.0,*.obj,*/.svn/*,*/nbproject/*,*/_archive/*,*/_archived/*,*/node_modules/*,*/bower_components/*,cscope.out,tags,*.DS_Store
+    set wildignore=*.0,*.obj,*/.svn/*,*/.rocketeer/checkout/*,*/nbproject/*,*/_archive/*,*/_archived/*,*/node_modules/*,*/bower_components/*,cscope.out,tags,*.DS_Store
     set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
     "set scrolljump=5                " Lines to scroll when cursor leaves screen
     "set scrolloff=3                 " Minimum lines to keep above and below cursor
@@ -723,6 +723,7 @@ endif
                     \-not -path "*/.svn/*" 
                     \-not -path "*/node_modules/*" 
                     \-not -path "*/bower_components/*" 
+                    \-not -path "*/.rocketeer/checkout/*" 
                     \&& cscope -b -i ./cscope.files -f ./cscope.out 
                     \&& rm ./cscope.files -f<CR> 
 
@@ -738,6 +739,7 @@ endif
                     \--exclude="_archived" 
                     \--exclude="node_modules" 
                     \--exclude="bower_components" 
+                    \--exclude=".rocketeer" 
                     \--tag-relative=yes 
                     \--totals=yes<CR>
 
@@ -1200,13 +1202,15 @@ endif
     " Custom syntax {{{
         "php {{{
             " Section jumping: [[ and ]] provided by Antony Scriven <adscriven at gmail dot com>
-            let s:function = '\(abstract\s\+\|final\s\+\|private\s\+\|protected\s\+\|public\s\+\|static\s\+\)*function'
-            let s:class = '\(abstract\s\+\|final\s\+\)*class'
-            let s:interface = 'interface'
-            let s:section = '\(.*\%#\)\@!\_^\s*\zs\('.s:function.'\|'.s:class.'\|'.s:interface.'\)'
+            "let s:function = '\(abstract\s\+\|final\s\+\|private\s\+\|protected\s\+\|public\s\+\|static\s\+\)*function'
+            "let s:class = '\(abstract\s\+\|final\s\+\)*class'
+            "let s:interface = 'interface'
+            "let s:section = '\(.*\%#\)\@!\_^\s*\zs\('.s:function.'\|'.s:class.'\|'.s:interface.'\)'
             "These two lines throw a 'range not allowed/expected' type error
             "au FileType php exe 'vno <buffer> <silent> [[ ?' . escape(s:section, '|') . '?<CR>:nohls<CR>'
             "au FileType php exe 'vno <buffer> <silent> ]] /' . escape(s:section, '|') . '/<CR>:nohls<CR>'
+            au FileType php nmap ][ ]M
+            au FileType php nmap [] [M
         " }}}
 
     " }}}
