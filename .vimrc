@@ -1026,11 +1026,21 @@ endif
         " PHP {
             let g:syntastic_php_phpcs_args="--standard=PSR2"
             let g:syntastic_php_phpmd_post_args="~/.phpmd/ruleset.xml"
+            let g:syntastic_php_phpstan_args="--level=0 -c phpstan.neon"
 
-            let g:syntastic_php_checkers = ['php']
-            let g:syntastic_php_error_checkers = ['php']
-            let g:syntastic_php_syntax_checkers = ['php', 'phpcs', 'phpmd']
+            let g:syntastic_php_checkers = ['php', 'phpstan']
+            let g:syntastic_php_error_checkers = ['php', 'phpstan']
+            let g:syntastic_php_syntax_checkers = ['php', 'phpstan', 'phpcs', 'phpmd']
             let g:syntastic_wordpress_checkers = ['php']
+
+            " When we load a php file check to see if rom/vendor/autoload 
+            " exists, if it does, use that for phpstans autoloader!
+            function! SetSyntasticPhpstanPathForRom()
+                if filereadable(getcwd() . '/rom/vendor/autoload.php')
+                    let b:syntastic_php_phpstan_args="--level=0 --autoload-file='rom/vendor/autoload.php'"
+                endif
+            endfunction
+            au FileType php call SetSyntasticPhpstanPathForRom()
         " }
 
         let g:syntastic_mode_map = { 'mode': 'passive',
