@@ -158,6 +158,7 @@ endif
             Bundle 'stephpy/vim-php-cs-fixer'
             " Wordpress
             " Bundle 'dsawardekar/wordpress.vim'
+            Bundle 'Garethp/vdebug'
         endif
     " }
 
@@ -776,6 +777,8 @@ endif
         " Start searching at current directory
         let g:CommandTTraverseSCM = 'pwd'
         let g:CommandTMaxHeight = 30
+        " Revert switchbuf='' (CommandT messing with vim settings: https://github.com/wincent/command-t/issues/309)
+        au VimEnter * set switchbuf=
     " }
 
     " Ctags {
@@ -960,7 +963,7 @@ endif
 
     " phpfolding.vim {
         let g:DisableAutoPHPFolding = 1
-        map <F5> <Esc>:EnableFastPHPFolds<Cr>
+        "map <F5> <Esc>:EnableFastPHPFolds<Cr>
         map <F6> <Esc>:EnablePHPFolds<Cr>
         map <F7> <Esc>:DisablePHPFolds<Cr>
     " }
@@ -1093,7 +1096,7 @@ endif
         nmap <Leader>ap :Tabularize /,\zs /l0r0<CR>
         vmap <Leader>ap :s/,\([^ ]\)/, \1/g<CR>:Tabularize /,\zs /l0r0<CR>
     " }
-
+    
     " Tagbar {
         nmap <Leader>ot :TagbarToggle<CR>
     " }
@@ -1114,17 +1117,25 @@ endif
         let g:undotree_SetFocusWhenToggle=1
     " }
 
+    " vdebug {
+       let g:vdebug_keymap = {
+           \   "run" : "<Leader>vr",
+           \   "run_to_cursor" : "<Leader>vh",
+           \   "step_over" : "<Leader>vso",
+           \   "step_into" : "<Leader>vsi",
+           \   "step_out"  : "<Leader>vsO",
+           \   "close"     : "<Leader>vc",
+           \   "detach"    : "<Leader>vd",
+           \   "set_breakpoint" : "<Leader>vb",
+           \   "get_context" :  "<Leader>vC",
+           \   "eval_under_cursor" : "<Leader>vec",
+           \   "eval_visual" : "<Leader>vev"
+       \}
+    " }
     " Wordpress.vim {
         " This screws up indenting on some lines... highly annoying
         let g:wordpress_vim_php_syntax_highlight=0
         let g:wordpress_vim_dont_generate_tags=1
-    " }
-
-    " VCS (subversion) {
-        let g:netrw_mousemaps=0
-        let g:VCSCommandMapPrefix = "<Leader>v"
-        nmap ,vb ,vn
-        nmap ,vB ,vN
     " }
 
     " YCM {
@@ -1228,12 +1239,35 @@ endif
 " }}}
 
 " Functions {
+    function! s:update_debug_paths()
+        if exists('t:tcd_cwd')
+            execute "let g:vdebug_options['path_maps'] = { '/var/www/': '" . t:tcd_cwd . "' }"
+        endif
+    endfunction
+    " On vim enter, create an autocommand for TabEnter, this forces the autocmd
+    " to be created and thus fired after Tcd plugins autocommand (in theory,.. 
+    " in reality it isn't working)
+    au VimEnter * au TabEnter * silent call s:update_debug_paths()
+
+
     function! Ptab(tabdir, tabname)
         execute "tabnew"
         execute "Tcd ".a:tabdir
         execute "TName ".a:tabname
+        if getcwd() != $HOME
+            if filereadable(getcwd() . '/.vimrc')
+                execute "so " . getcwd() . '/.vimrc'
+            endif
+        endif
+
     endfunction
     command! -complete=dir -nargs=+ Ptab call Ptab(<f-args>)
+
+    function! Popen(tabdir, tabname)
+        execute "Tcd ".a:tabdir
+        execute "TName ".a:tabname
+    endfunction
+    command! -complete=dir -nargs=+ Popen call Popen(<f-args>)
 
     function! FileFix()
         execute "set ff=unix"
@@ -1242,12 +1276,6 @@ endif
     endfunction
     command! FileFix call FileFix()
     nmap <Leader>FF :call FileFix()<CR>
-
-    function! Popen(tabdir, tabname)
-        execute "Tcd ".a:tabdir
-        execute "TName ".a:tabname
-    endfunction
-    command! -complete=dir -nargs=+ Popen call Popen(<f-args>)
 
     function! s:DiffWithSaved()
       let filetype=&ft
