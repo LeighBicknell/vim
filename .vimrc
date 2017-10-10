@@ -21,7 +21,7 @@ endif
         endif
     " }
 
-    let g:bundle_groups=['general', 'programming', 'php', 'javascript', 'html', 'twig', 'csv', 'misc']
+    let g:bundle_groups=['general', 'programming', 'php', 'javascript', 'html', 'twig', 'csv', 'vue', 'misc']
     let g:php_refactor_command='php-refactor'
     let g:xml_syntax_folding=1
     "au FileType xml setlocal foldmethod=syntax
@@ -231,6 +231,12 @@ endif
     " csv {
         if count(g:bundle_groups, 'csv')
             Bundle 'chrisbra/csv.vim'
+        endif
+    " }
+    
+    " vue {
+        if count(g:bundle_groups, 'vue')
+            Bundle 'posva/vim-vue'
         endif
     " }
 " }
