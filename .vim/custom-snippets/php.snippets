@@ -536,61 +536,14 @@ $0
 
 endsnippet
 
-# ########################## DOCS #########################
-snippet fidoc "File documentation" !
-/**
- * ${1:`!p snip.rv=snip.fn`}
- *
- * PHP Version 5.4
- *
- * @category   ${2}
- * @package    ${3}
- * @subpackage ${4}
- * @author     Leigh Bicknell <leigh@orangeleaf.com>
- * @license    Copyright Orangeleaf Systems Ltd 2013
- * @link       http://orangeleaf.com
- */
-
-$0
-
-endsnippet
-
-snippet cdoc "Class Doc" !
-/**
- * Class   ${1:`!p snip.rv=snip.fn.capitalize().split('.')[0]`}
- *
- * @category   ${2}
- * @package    ${3}
- * @subpackage ${4}
- * @author     Leigh Bicknell <leigh@orangeleaf.com>
- * @license    Copyright Orangeleaf Systems Ltd 2013
- * @link       http://orangeleaf.com
- */$0
-endsnippet
-
-snippet fdoc "Function Doc" !
-/**
- * ${1}
- *
- * @return ${2}
- * @access ${3}
- */
-endsnippet
-
-snippet vdoc "Var Doc" !
-/** @var $${1} ${2} */
-endsnippet
-
-# ########################### CLASSES #########################
-
 snippet class "Class" !b
-class ${1:`!p snip.rv=snip.fn.split('.')[0]`}
+<?php
+
+namespace ${1:`substitute(substitute(expand("%:h"), 'v^w+/(u)', '1', ''), '/', '\', 'g')`};
+
+class ${2:`!p snip.rv=snip.fn.split('.')[0]`}$3
 {
-    $2
-    public function __construct(${3:$options})
-    {
-        ${4:// code}
-    }$0
+	$4
 }
 endsnippet
 

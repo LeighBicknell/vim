@@ -152,10 +152,10 @@ endif
             Bundle 'arnaud-lb/vim-php-namespace'
             Bundle 'rayburgemeestre/phpfolding.vim'
             Bundle 'FlickerBean/vim-php-refactoring'
-            "Ubuntu 16.04 vim isn't compiled with Python2 support, 
-            "vim-phpunitqf needs it
-            "Bundle 'joonty/vim-phpunitqf'
             Bundle 'stephpy/vim-php-cs-fixer'
+            " Helper for creating php snippets
+            Bundle 'sniphpets/sniphpets'
+            Bundle 'sniphpets/sniphpets-symfony'
             " Wordpress
             " Bundle 'dsawardekar/wordpress.vim'
             Bundle 'Garethp/vdebug'
