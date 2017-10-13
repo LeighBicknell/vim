@@ -320,6 +320,11 @@ endif
 " }
 
 " Vim UI {
+    let g:LargeFile = 1024 * 1024 * 10
+    autocmd BufReadPre * let f=getfsize(expand("<afile>")) | if f > g:LargeFile || f == -2 | call LargeFile() | endif
+    function! LargeFile()
+        let b:LargeFile=1
+    endfunction
 
     set tabpagemax=15               " Only show 15 tabs
     set showmode                    " Display the current mode
@@ -413,6 +418,10 @@ endif
         "return '[\s]' if trailing white space is detected
         "return '' otherwise
         function! StatuslineTrailingSpaceWarning()
+            if exists("b:LargeFile")
+                return ''
+            endif
+
             if !exists("b:statusline_trailing_space_warning")
 
                 if !&modifiable
@@ -432,6 +441,10 @@ endif
 
         "return the syntax highlight group under the cursor ''
         function! StatuslineCurrentHighlight()
+            if exists("b:LargeFile")
+                return ''
+            endif
+
             let name = synIDattr(synID(line('.'),col('.'),1),'name')
             if name == ''
                 return ''
@@ -447,6 +460,10 @@ endif
         "return '[mixed-indenting]' if spaces and tabs are used to indent
         "return an empty string if everything is fine
         function! StatuslineTabWarning()
+            if exists("b:LargeFile")
+                return ''
+            endif
+
             if !exists("b:statusline_tab_warning")
                 let b:statusline_tab_warning = ''
 
@@ -479,6 +496,11 @@ endif
         "lines, y is the median length of the long lines and z is the length of the
         "longest line
         function! StatuslineLongLineWarning()
+
+            if exists("b:LargeFile")
+                return ''
+            endif
+
             if !exists("b:statusline_long_line_warning")
 
                 if !&modifiable
