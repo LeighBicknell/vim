@@ -978,9 +978,9 @@ endif
 
     " php-cs-fixer {
         " use ,pcd for PhpCsFixerFixDirectory and ,pcf for PhpCsFixerFixFile
-        let g:php_cs_fixer_level = "psr2"                 " which level ?
+        let g:php_cs_fixer_level = "psr2"                 " which level ? Deprecated?
         let g:php_cs_fixer_config = "default"             " configuration
-        let g:php_cs_fixer_rules = "@PSR2"                " options: --rules (default:@PSR2)
+        let g:php_cs_fixer_rules = "@Symfony"                " options: --rules (default:@PSR2)
         let g:php_cs_fixer_php_path = "php"               " Path to PHP
         " If you want to define specific fixers:
         " let g:php_cs_fixer_fixers_list = "linefeed,short_tag,indentation"  " deprecated?
@@ -1146,7 +1146,7 @@ endif
     " }
 
     " vdebug {
-       let g:vdebug_keymap = {
+        let g:vdebug_keymap = {
            \   "run" : "<Leader>vr",
            \   "run_to_cursor" : "<Leader>vh",
            \   "step_over" : "<Leader>vso",
@@ -1159,6 +1159,10 @@ endif
            \   "eval_under_cursor" : "<Leader>vec",
            \   "eval_visual" : "<Leader>vev"
        \}
+        let g:vdebug_options = {
+            \   "server" : "localhost",
+            \   "port" : "9001"
+        \}
     " }
     " Wordpress.vim {
         " This screws up indenting on some lines... highly annoying
