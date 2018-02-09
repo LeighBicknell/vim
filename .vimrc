@@ -562,7 +562,7 @@ endif
     set wildmode=longest,list,full  " Command <Tab> completion, list matches, then longest common part, then all.
     " adding */.git/ to wildignore breaks fugitive Gdiff command, instead add 
     " it to command-t and .agignore
-    set wildignore=*.0,*.obj,*/.svn/*,*/.rocketeer/checkout/*,*/nbproject/*,*/_archive/*,*/_archived/*,*/node_modules/*,*/bower_components/*,cscope.out,tags,*.DS_Store
+    set wildignore=*.0,*.obj,*/doc/*,*/.svn/*,*/.rocketeer/checkout/*,*/nbproject/*,*/_archive/*,*/_archived/*,*/node_modules/*,*/bower_components/*,cscope.out,tags,*.DS_Store
     set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
     "set scrolljump=5                " Lines to scroll when cursor leaves screen
     "set scrolloff=3                 " Minimum lines to keep above and below cursor
