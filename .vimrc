@@ -562,7 +562,7 @@ endif
     set wildmode=longest,list,full  " Command <Tab> completion, list matches, then longest common part, then all.
     " adding */.git/ to wildignore breaks fugitive Gdiff command, instead add 
     " it to command-t and .agignore
-    set wildignore=*.0,*.obj,*/doc/*,*/.svn/*,*/.rocketeer/checkout/*,*/nbproject/*,*/_archive/*,*/_archived/*,*/node_modules/*,*/bower_components/*,cscope.out,tags,*.DS_Store
+    set wildignore=*.0,*.obj,*/cache/*,*/logs*/,*/doc/*,*/.svn/*,*/.rocketeer/checkout/*,*/nbproject/*,*/_archive/*,*/_archived/*,*/node_modules/*,*/bower_components/*,cscope.out,tags,*.DS_Store
     set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
     "set scrolljump=5                " Lines to scroll when cursor leaves screen
     "set scrolloff=3                 " Minimum lines to keep above and below cursor
@@ -768,7 +768,7 @@ endif
                     \--exclude="_archived" 
                     \--exclude="node_modules" 
                     \--exclude="bower_components" 
-                    \--exclude=".rocketeer" 
+                    \--exclude="\.rocketeer" 
                     \--tag-relative=yes 
                     \--totals=yes<CR>
 
@@ -799,7 +799,7 @@ endif
     " }
 
     " Command-T {
-        let g:CommandTWildIgnore=&wildignore . ",*/.git/*"
+        let g:CommandTWildIgnore=&wildignore . ",*/.git/*,*/vendor/*"
         " Use find tool for file searching
         let g:CommandTFileScanner = 'find'
         " Start searching at current directory
@@ -1177,7 +1177,7 @@ endif
 
         " Disable auto omni completion for these filetypes, trigger manually
         " instead
-        let g:ycm_filetype_specific_completion_to_disable = { 'vim':1, 'txt':1, 'javascript':1, 'php':1 }
+        "let g:ycm_filetype_specific_completion_to_disable = { 'vim':1, 'txt':1, 'javascript':1, 'php':1 }
         let g:ycm_complete_in_comments = 1
         let g:ycm_complete_in_strings = 1
         let g:ycm_collect_identifiers_from_comments_and_strings = 1
