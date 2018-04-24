@@ -1074,8 +1074,8 @@ endif
             au FileType php call SetSyntasticPhpstanPathForRom()
         " }
 
-        let g:syntastic_mode_map = { 'mode': 'passive',
-                                   \ 'active_filetypes': ['php', 'javascript', 'markdown'],
+        let g:syntastic_mode_map = { 'mode': 'active',
+                                   \ 'active_filetypes': [],
                                    \ 'passive_filetypes': [] }
 
         nmap <Leader>sc :SyntasticCheck<CR>
@@ -1177,13 +1177,14 @@ endif
 
         " Disable auto omni completion for these filetypes, trigger manually
         " instead
-        "let g:ycm_filetype_specific_completion_to_disable = { 'vim':1, 'txt':1, 'javascript':1, 'php':1 }
+        let g:ycm_filetype_specific_completion_to_disable = { 'vim':1, 'txt':1, 'javascript':1, 'php':1 }
         let g:ycm_complete_in_comments = 1
         let g:ycm_complete_in_strings = 1
         let g:ycm_collect_identifiers_from_comments_and_strings = 1
         " Get php main functions/keywords from syntax file
         let g:ycm_seed_identifiers_with_syntax = 1
         let g:ycm_disable_for_files_larger_than_kb = 950
+        "let g:ycm_semantic_triggers = { 'php' : [] }
         " }
 
 " }
