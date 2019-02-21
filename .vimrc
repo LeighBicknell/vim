@@ -158,7 +158,7 @@ endif
             Bundle 'sniphpets/sniphpets-symfony'
             " Wordpress
             " Bundle 'dsawardekar/wordpress.vim'
-            Bundle 'Garethp/vdebug'
+            " Bundle 'Garethp/vdebug'
         endif
     " }
 
@@ -224,7 +224,7 @@ endif
 
     " Twig {
         if count(g:bundle_groups, 'twig')
-            Bundle 'beyondwords/vim-twig'
+            Bundle 'lumiliet/vim-twig'
         endif
     " }
     
@@ -320,7 +320,7 @@ endif
 " }
 
 " Vim UI {
-    let g:LargeFile = 1024 * 1024 * 10
+    let g:LargeFile = 1024 * 1024
     autocmd BufReadPre * let f=getfsize(expand("<afile>")) | if f > g:LargeFile || f == -2 | call LargeFile() | endif
     function! LargeFile()
         let b:LargeFile=1
@@ -596,6 +596,7 @@ endif
     autocmd FileType c,cpp,css,less,scss,sass,java,go,php,php.wordpress,javascript,python,twig,xml,yml autocmd BufWritePre <buffer> if !exists('g:keep_trailing_whitespace') | call StripTrailingWhitespace() | endif
     autocmd FileType go autocmd BufWritePre <buffer> Fmt
     autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
+    autocmd BufNewFile,BufRead *.tpl set filetype=html.twig
     autocmd FileType haskell setlocal expandtab shiftwidth=2 softtabstop=2
     autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 
@@ -603,6 +604,10 @@ endif
     autocmd FileType haskell setlocal commentstring=--\ %s
     " Workaround broken colour highlighting in Haskell
     autocmd FileType haskell setlocal nospell
+
+    " Make all diffs set wrap
+    autocmd FilterWritePre * if &diff | setlocal wrap< | endif
+
 
 " }
 
@@ -917,7 +922,7 @@ endif
         nmap <leader>oN :NERDTreeFind<CR>
 
         let NERDTreeShowBookmarks=0
-        let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr', '\nbproject']
+        let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr', 'nbproject']
         let NERDTreeChDirMode=0
         let NERDTreeMouseMode=1
         let NERDTreeShowHidden=0
@@ -978,7 +983,7 @@ endif
 
     " php-cs-fixer {
         " use ,pcd for PhpCsFixerFixDirectory and ,pcf for PhpCsFixerFixFile
-        let g:php_cs_fixer_level = "psr2"                 " which level ? Deprecated?
+        "let g:php_cs_fixer_level = "psr2"                 " which level ? Deprecated?
         let g:php_cs_fixer_config = "default"             " configuration
         let g:php_cs_fixer_rules = "@Symfony"                " options: --rules (default:@PSR2)
         let g:php_cs_fixer_php_path = "php"               " Path to PHP
