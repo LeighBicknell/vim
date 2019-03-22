@@ -155,7 +155,7 @@ endif
             Bundle 'stephpy/vim-php-cs-fixer'
             " Helper for creating php snippets
             Bundle 'sniphpets/sniphpets'
-            Bundle 'sniphpets/sniphpets-symfony'
+            "Bundle 'sniphpets/sniphpets-symfony'
             " Wordpress
             " Bundle 'dsawardekar/wordpress.vim'
             " Bundle 'Garethp/vdebug'
@@ -1142,6 +1142,12 @@ endif
         let g:UltiSnipsSnippetsDir=$editor_root . "/custom-snippets"
         let g:UltiSnipsEditSplit='vertical'
         "let g:UltiSnipsUsePythonVersion=3
+        " Disable autotrigger. git says this isn't an issue.
+        " I disagree based on profiling
+        augroup ultisnips_no_auto_expansion
+        au!
+        au VimEnter * au! UltiSnips_AutoTrigger
+augroup END
     " }
 
     " UndoTree {
