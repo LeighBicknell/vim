@@ -132,7 +132,7 @@ endif
             "Bundle 'vcscommand.vim'
             Bundle 'vim-scripts/cscope_macros.vim'
             Bundle 'Valloric/YouCompleteMe'
-            Bundle 'ap/vim-css-color'
+            "Bundle 'ap/vim-css-color'
             Bundle 'majutsushi/tagbar'
             if has('unix')
                 " Requires unix system
@@ -715,7 +715,7 @@ endif
         let g:NERDShutUp=1
         let b:match_ignorecase = 1
         " vim-css-color for scss and sass (and less)
-        autocmd FileType less,sass,scss,stylus,vim syn cluster sassCssAttributes add=@cssColors
+        "autocmd FileType less,sass,scss,stylus,vim syn cluster sassCssAttributes add=@cssColors
     " }
 
     " Ack-grep {
