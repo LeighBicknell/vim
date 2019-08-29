@@ -257,7 +257,7 @@ endif
 
     " This linux if isn't working :/
     if has ('unix') && (has ('gui') || has('nvim')) " On Linux use + register for copy-paste
-            set clipboard=unnamedplus
+        set clipboard=unnamedplus
     elseif has ('gui')          " On mac and Windows, use * register for copy-paste
         set clipboard=unnamed
     endif
@@ -551,8 +551,11 @@ endif
     "set relativenumber              " Relative numbering, slow but handy
     "set cursorline                  " Highlight current line, slow but handy
     "set cursorcolumn                " Now we've got smooth scroll we may aswell go all out!
-    "au VimEnter * NoMatchParen
-    set showmatch                   " Show matching brackets/parenthesis
+
+    "Disable match paren because it makes command-T incredibly slow
+    au VimEnter * NoMatchParen
+    "set showmatch                   " Show matching brackets/parenthesis
+
     set incsearch                   " Find as you type search
     set hlsearch                    " Highlight search terms
     set winminheight=0              " Windows can be 0 line high
@@ -888,12 +891,12 @@ endif
             \ 'tools': ['ag', 'git', 'grep'],
             \ 'open':  1,
             \ 'jump':  0,
-            \ 'next_tool': '<leader>G',
             \ 'ag': {
             \   'grepprg': 'ag --vimgrep',
             \   'wordanchors': ['', ''],
             \   }
             \ }
+        let g:grepper.prompt_mapping_tool='<S-Tab>'
         nnoremap <leader>git :Grepper -tool git -noswitch<cr>
         nnoremap <leader>ag :Grepper -tool ag -noswitch -cword<cr>
         nnoremap <leader>* :Grepper -tool ag -noswitch -cword -noprompt<cr>
@@ -1184,17 +1187,34 @@ augroup END
     " YCM {
         " Disable until I have more ram (7mb tags file causes 175mb ram
         " usage!)
-        "let g:ycm_collect_identifiers_from_tags_files=1
+        let g:ycm_collect_identifiers_from_tags_files=0
 
         " Disable auto omni completion for these filetypes, trigger manually
         " instead
         let g:ycm_filetype_specific_completion_to_disable = { 'vim':1, 'txt':1, 'javascript':1, 'php':1 }
         let g:ycm_complete_in_comments = 1
         let g:ycm_complete_in_strings = 1
-        let g:ycm_collect_identifiers_from_comments_and_strings = 1
+        let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " Get php main functions/keywords from syntax file
         let g:ycm_seed_identifiers_with_syntax = 1
         let g:ycm_disable_for_files_larger_than_kb = 950
+        let g:ycm_auto_trigger=0
+
+        " Allow manual trigger of identifier completeion
+        let g:ycm_auto_trigger = 0
+        let g:ycm_collect_identifiers_from_comments_and_strings = 1
+        let g:ycm_collect_identifiers_from_tags_files=1
+        inoremap <a-i> <c-r>=<sid>ycm_trigger_identifier()<cr>
+
+        function! s:ycm_trigger_identifier()
+          let g:ycm_auto_trigger = 1
+          augroup ycm_trigger_identifier
+            au!
+            autocmd InsertLeave * ++once let g:ycm_auto_trigger = 0
+          augroup end
+          doautocmd TextChangedI
+          return ''
+        endfunction
         "let g:ycm_semantic_triggers = { 'php' : [] }
         " }
 
