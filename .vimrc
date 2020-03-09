@@ -552,7 +552,7 @@ endif
     "set cursorline                  " Highlight current line, slow but handy
     "set cursorcolumn                " Now we've got smooth scroll we may aswell go all out!
 
-    "Disable match paren because it makes command-T incredibly slow
+    "Disable match paren because it makes command-T incredibly slow, gawd knows why!
     au VimEnter * NoMatchParen
     "set showmatch                   " Show matching brackets/parenthesis
 
@@ -807,7 +807,7 @@ endif
     " }
 
     " Command-T {
-        let g:CommandTWildIgnore=&wildignore . ",*/.git/*,*/vendor/*"
+        let g:CommandTWildIgnore=&wildignore . ",*/.git/*,*/vendor/*,*.jpg,*.gif,*.png,*.tmp"
         " Use find tool for file searching
         let g:CommandTFileScanner = 'find'
         " Start searching at current directory
@@ -873,8 +873,8 @@ endif
         nnoremap <silent> <leader>ge :Gedit<CR>
         nnoremap <silent> <leader>gg :GitGutterToggle<CR>
         nnoremap <silent> <leader>ga :GitGutterStageHunk<CR>
-        nmap [g <Plug>GitGutterPrevHunk
-        nmap ]g <Plug>GitGutterNextHunk
+        nmap [g <Plug>(GitGutterPrevHunk)
+        nmap ]g <Plug>(GitGutterNextHunk)
         " Auto remove fugitive buffers
         autocmd BufReadPost fugitive://* set bufhidden=delete
         " Go to parent directory when browsing a tree:
@@ -1071,15 +1071,30 @@ endif
             let g:syntastic_php_error_checkers = ['php', 'phpstan']
             let g:syntastic_php_syntax_checkers = ['php', 'phpstan', 'phpcs', 'phpmd']
             let g:syntastic_wordpress_checkers = ['php']
+            let g:syntastic_syntax_mode = 0
 
             " When we load a php file check to see if rom/vendor/autoload 
             " exists, if it does, use that for phpstans autoloader!
-            function! SetSyntasticPhpstanPathForRom()
-                if filereadable(getcwd() . '/rom/vendor/autoload.php')
-                    let b:syntastic_php_phpstan_args="--level=0 --autoload-file='rom/vendor/autoload.php'"
+            function! SetSyntasticSettingsForRom()
+                if &ft ==# 'php'
+                    if filereadable(getcwd() . '/rom/vendor/autoload.php')
+                        " PHPStan ROM
+                        let b:syntastic_php_phpstan_args="--level=0 --autoload-file='rom/vendor/autoload.php'"
+                        " Set phpcs ruleset to match grumphp
+                        let b:syntastic_php_phpcs_args="--standard='rom/ruleset.xml'"
+                        " Enabled phpcs for rom files
+                        let g:syntastic_php_checkers = ['php', 'phpstan', 'phpcs']
+                    else
+                        " Reset the settings
+                        if g:syntastic_syntax_mode == 1
+                            call SyntasticSyntaxMode()
+                        else
+                            call SyntasticErrorMode()
+                        endif
+                    endif
                 endif
             endfunction
-            au FileType php call SetSyntasticPhpstanPathForRom()
+            au BufEnter * call SetSyntasticSettingsForRom()
         " }
 
         let g:syntastic_mode_map = { 'mode': 'active',
@@ -1093,6 +1108,7 @@ endif
             let g:syntastic_scss_checkers = g:syntastic_scss_syntax_checkers
             let g:syntastic_php_checkers = g:syntastic_php_syntax_checkers
             let g:syntastic_aggregate_errors = 1
+            let g:syntastic_syntax_mode = 1
         endfunction
         command! SyntasticSyntaxMode call SyntasticSyntaxMode()
         nmap <Leader>ss :SyntasticSyntaxMode<CR>
@@ -1103,6 +1119,7 @@ endif
             let g:syntastic_php_checkers = g:syntastic_php_error_checkers
             let g:syntastic_scss_checkers = g:syntastic_scss_error_checkers
             let g:syntastic_aggregate_errors = 0
+            let g:syntastic_syntax_mode = 0
         endfunction
         command! SyntasticErrorMode call SyntasticErrorMode()
         nmap <Leader>se :SyntasticErrorMode<CR>
