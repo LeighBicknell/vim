@@ -1,0 +1,68 @@
+{
+  "mapreduce": {
+    "body": [
+      "/**",
+      " * @NScriptName EXAMPLE - Map/Reduce",
+      " * @NScriptType MapReduceScript",
+      " * @NApiVersion 2.x",
+      " */",
+      "",
+      "import {EntryPoints} from 'N/types';",
+      "",
+      "export const getInputData: EntryPoints.MapReduce.getInputData = () => {}",
+      "",
+      "export const map: EntryPoints.MapReduce.map = (mapContext) => {}",
+      "",
+      "export const summarize: EntryPoints.MapReduce.summarize = (context) => {}"
+    ],
+    "prefix": "mapreduce",
+    "description": "Creates a M/R script skeleton"
+  },
+  "userevent": {
+    "body": [
+      "/**",
+      " * @NScriptName EXAMPLE - User Event",
+      " * @NScriptType UserEventScript",
+      " * @NApiVersion 2.x",
+      " */",
+      "",
+      "import {EntryPoints} from 'N/types';",
+      "import log = require('N/log');",
+      "",
+      "export function afterSubmit(context: EntryPoints.UserEvent.afterSubmitContext) {}"
+    ],
+    "prefix": "userevent",
+    "description": "Creates a User Event script skeleton"
+  },
+  "restlet": {
+    "body": [
+        "/**",
+        " * @NScriptName EXAMPLE - RESTlet",
+        " * @NScriptType RESTlet",
+        " * @NApiVersion 2.x",
+        " */",
+        "",
+        "import log = require('N/log');",
+        "",
+        "export function post(context) {}"
+      ],
+    "prefix": "restlet",
+    "description": "Creates a RESTlet Skeleton"
+  },
+  "suitelet":{
+    "body": [
+      "/**",
+      " * @NScriptName EXAMPLE - SUITElet",
+      " * @NScriptType Suitelet",
+      " * @NApiVersion 2.x",
+      " */",
+      "",
+      "import { EntryPoints } from 'N/types';",
+      "import log = require('N/log');",
+      "",
+      "export function onRequest(context: EntryPoints.Suitelet.onRequestContext) {}"
+    ],
+    "prefix": "suitelet",
+    "description": "Creates a Suitelet Skeleton"
+  }
+}

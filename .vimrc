@@ -1,4 +1,4 @@
-let $HOME = "/home/leigh"
+let $HOME = "/Users/Leigh.bicknell"
 
 " Neovim segregation support
 if has('nvim')
@@ -22,6 +22,7 @@ endif
     " }
 
     let g:bundle_groups=['general', 'programming', 'php', 'javascript', 'html', 'twig', 'csv', 'vue', 'misc']
+"    let g:bundle_groups=['general', 'programming']
     let g:php_refactor_command='php-refactor'
     let g:xml_syntax_folding=1
     "au FileType xml setlocal foldmethod=syntax
@@ -112,8 +113,7 @@ endif
             " Open items from quickfix wherever i want!
             Bundle 'yssl/QFEnter'
         endif
-    " }
-
+    "
     "
     " General Programming {
         if count(g:bundle_groups, 'programming')
@@ -138,6 +138,8 @@ endif
                 " Requires unix system
                 Bundle 'zenbro/mirror.vim'
             endif
+            Bundle 'editorconfig/editorconfig-vim'
+            Bundle 'vim-test/vim-test'
         endif
     " }
 
@@ -147,14 +149,20 @@ endif
             " "This is needed by pdv :/
             Bundle 'tobyS/vmustache'
             " PHPDocBlocks
-            Bundle 'shawncplus/phpcomplete.vim'
+            " Bundle 'shawncplus/phpcomplete.vim'
+            "Bundle 'm2mdas/phpcomplete-extended'
+            "Bundle 'm2mdas/phpcomplete-extended-symfony'
+            "Bundle 'm2mdas/phpcomplete-extended-laravel'
+            Bundle 'lvht/phpcd.vim'
             Bundle 'FlickerBean/pdv'
             Bundle 'arnaud-lb/vim-php-namespace'
             Bundle 'rayburgemeestre/phpfolding.vim'
-            Bundle 'FlickerBean/vim-php-refactoring'
+            "Bundle 'FlickerBean/vim-php-refactoring'
+            Bundle 'adoy/vim-php-refactoring-toolbox'
             Bundle 'stephpy/vim-php-cs-fixer'
             " Helper for creating php snippets
             Bundle 'sniphpets/sniphpets'
+            Bundle 'jwalton512/vim-blade'
             "Bundle 'sniphpets/sniphpets-symfony'
             " Wordpress
             " Bundle 'dsawardekar/wordpress.vim'
@@ -175,6 +183,10 @@ endif
         if count(g:bundle_groups, 'javascript')
             Bundle 'elzr/vim-json'
             Bundle 'briancollins/vim-jst'
+            Bundle 'leafgarland/typescript-vim'
+            Bundle 'jason0x43/vim-js-indent'
+            " for Syntastic typescript
+            Bundle 'Quramy/tsuquyomi'
         endif
     " }
 
@@ -256,9 +268,9 @@ endif
     scriptencoding utf-8
 
     " This linux if isn't working :/
-    if has ('unix') && (has ('gui') || has('nvim')) " On Linux use + register for copy-paste
+    if has ('unix') && (has ('gui') && has('nvim')) " On Linux use + register for copy-paste
         set clipboard=unnamedplus
-    elseif has ('gui')          " On mac and Windows, use * register for copy-paste
+    elseif has ('gui') || has ('gui_mac')          " On mac and Windows, use * register for copy-paste
         set clipboard=unnamed
     endif
 
@@ -335,6 +347,7 @@ endif
     highlight clear LineNr          " Current line number row will have same background color in relative mode.
                                     " Things like vim-gitgutter will match LineNr highlight
     "highlight clear CursorLineNr    " Remove highlight color from current line number
+    autocmd ColorScheme * highlight! link SignColumn LineNr
 
     if has('cmdline_info')
         set ruler                   " Show the ruler
@@ -565,7 +578,7 @@ endif
     set wildmode=longest,list,full  " Command <Tab> completion, list matches, then longest common part, then all.
     " adding */.git/ to wildignore breaks fugitive Gdiff command, instead add 
     " it to command-t and .agignore
-    set wildignore=*.0,*.obj,*/cache/*,*/logs*/,*/doc/*,*/.svn/*,*/.rocketeer/checkout/*,*/nbproject/*,*/_archive/*,*/_archived/*,*/node_modules/*,*/bower_components/*,cscope.out,tags,*.DS_Store
+    set wildignore=*.0,*.obj,*/cache/*,*/logs*/,*/doc/*,*/.svn/*,*/.rocketeer/checkout/*,*/nbproject/*,*/_archive/*,*/_archived/*,*/node_modules/*,*/bower_components/*,cscope.out,tags,*.DS_Store,*TEMPFOLDER*
     set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
     "set scrolljump=5                " Lines to scroll when cursor leaves screen
     "set scrolloff=3                 " Minimum lines to keep above and below cursor
@@ -603,7 +616,7 @@ endif
     autocmd FileType haskell setlocal expandtab shiftwidth=2 softtabstop=2
     autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 
-    " Workaround vim-commentary for Haskell
+    " Workaround vim-commentary for Haskel
     autocmd FileType haskell setlocal commentstring=--\ %s
     " Workaround broken colour highlighting in Haskell
     autocmd FileType haskell setlocal nospell
@@ -753,7 +766,7 @@ endif
 
         "Automatically generate cscope database, Takes a while due to slow remote
         "network drives :(
-        nnoremap <F10> :Start find -name '*.php' > cscope.files 
+        nnoremap <F10> :Start find . -name '*.php' > cscope.files 
                     \-not -path "*/_archive/*" 
                     \-not -path "*/_archived/*" 
                     \-not -path "*/.git/*" 
@@ -807,7 +820,7 @@ endif
     " }
 
     " Command-T {
-        let g:CommandTWildIgnore=&wildignore . ",*/.git/*,*/vendor/*,*.jpg,*.gif,*.png,*.tmp"
+        let g:CommandTWildIgnore=&wildignore . ",*/.git/*,*/vendor/*,*.jpg,*.gif,*.png,*.tmp,*/node_modules/*,*/TEMPFOLDER/*"
         " Use find tool for file searching
         let g:CommandTFileScanner = 'find'
         " Start searching at current directory
@@ -855,6 +868,14 @@ endif
         nnoremap <Leader>nbc :Start npm run build:css<CR>
         nnoremap <Leader>nbj :Start npm run build:js<CR>
         nnoremap <Leader>nbw :Start npm run watch<CR>
+        nnoremap <leader>gbu :Dispatch gulp --file % build-and-upload<CR>
+        nnoremap <leader>nbu :call DeployToNetsuiteSdf()<CR>
+        function! DeployToNetsuiteSdf()
+            let b:pubpath = substitute(expand('%:p:.'), 'sdf/src/FileCabinet', '', 'g')
+            let b:pubpath = substitute(b:pubpath, '.ts$', '.js', '')
+            "echo b:pubpath
+            execute "Dispatch cd sdf && npm run devdeploy-manual -- " . b:pubpath
+        endfunction
     " }
 
     " Emmet {
@@ -862,10 +883,10 @@ endif
     " }
 
     " Fugitive {
-        nnoremap <silent> <leader>gs :Gstatus<CR>
+        nnoremap <silent> <leader>gs :Git<CR>
         nnoremap <silent> <leader>gd :Gdiff<CR>
         nnoremap <silent> <leader>gc :Gcommit<CR>
-        nnoremap <silent> <leader>gb :Gblame<CR>
+        nnoremap <silent> <leader>gb :Git blame<CR>
         nnoremap <silent> <leader>gl :Glog<CR>
         nnoremap <silent> <leader>gp :Git push<CR>
         nnoremap <silent> <leader>gr :Gread<CR>:GitGutter<CR>
@@ -979,14 +1000,19 @@ endif
         let g:phpcomplete_parse_docblock_comments = 1
 
         "extended {
-            "autocmd  FileType  php setlocal omnifunc=phpcomplete_extended#CompletePHP
+            autocmd  FileType  php setlocal omnifunc=phpcomplete_extended#CompletePHP
             let g:phpcomplete_index_composer_command='composer'
         " }
     " }
 
+    " phpcd {
+        " Auto restart the deamon after every bugger switch
+        let g:phpcd_auto_restart=1
+    " }
+
     " php-cs-fixer {
         " use ,pcd for PhpCsFixerFixDirectory and ,pcf for PhpCsFixerFixFile
-        "let g:php_cs_fixer_level = "psr2"                 " which level ? Deprecated?
+        "let g:php_cs_fixer_level = "psr12"                 " which level ? Deprecated?
         let g:php_cs_fixer_config = "default"             " configuration
         let g:php_cs_fixer_rules = "@Symfony"                " options: --rules (default:@PSR2)
         let g:php_cs_fixer_php_path = "php"               " Path to PHP
@@ -1044,8 +1070,22 @@ endif
 
     " syntastic {
         let g:syntastic_check_on_open=0
-        let g:syntastic_auto_jump=1
+        let g:syntastic_auto_jump=0
         let g:syntastic_auto_loc_list=1
+
+        " typescript {
+            let g:tsuquyomi_disable_quickfix = 1
+            let g:tsuquyomi_disable_default_mappings = 1
+            let g:syntastic_typescript_checkers=['tsuquyomi', 'eslint']
+            let g:syntastic_javascript_eslint_exec = 'eslint_d'
+            autocmd FileType typescript nnoremap <buffer> <C-]> :YcmCompleter GoTo<CR>
+        " }
+        
+        " javascript {
+            let g:syntastic_always_populate_loc_list = 1
+            let g:syntastic_javascript_checkers = ['eslint']
+            let g:syntastic_javascript_eslint_exec = 'eslint_d'
+        " }
 
         " SCSS {
 
@@ -1063,38 +1103,16 @@ endif
 
 
         " PHP {
-            let g:syntastic_php_phpcs_args="--standard=PSR2"
+            let g:syntastic_php_phpcs_args="--standard=PSR12"
             let g:syntastic_php_phpmd_post_args="~/.phpmd/ruleset.xml"
-            let g:syntastic_php_phpstan_args="--level=0 -c phpstan.neon"
+            let g:syntastic_php_phpstan_args="--level=0"
 
-            let g:syntastic_php_checkers = ['php', 'phpstan']
+            let g:syntastic_php_checkers = ['php', 'phpstan', 'phpcs', 'phpmd']
             let g:syntastic_php_error_checkers = ['php', 'phpstan']
             let g:syntastic_php_syntax_checkers = ['php', 'phpstan', 'phpcs', 'phpmd']
             let g:syntastic_wordpress_checkers = ['php']
             let g:syntastic_syntax_mode = 0
 
-            " When we load a php file check to see if rom/vendor/autoload 
-            " exists, if it does, use that for phpstans autoloader!
-            function! SetSyntasticSettingsForRom()
-                if &ft ==# 'php'
-                    if filereadable(getcwd() . '/rom/vendor/autoload.php')
-                        " PHPStan ROM
-                        let b:syntastic_php_phpstan_args="--level=0 --autoload-file='rom/vendor/autoload.php'"
-                        " Set phpcs ruleset to match grumphp
-                        let b:syntastic_php_phpcs_args="--standard='rom/ruleset.xml'"
-                        " Enabled phpcs for rom files
-                        let g:syntastic_php_checkers = ['php', 'phpstan', 'phpcs']
-                    else
-                        " Reset the settings
-                        if g:syntastic_syntax_mode == 1
-                            call SyntasticSyntaxMode()
-                        else
-                            call SyntasticErrorMode()
-                        endif
-                    endif
-                endif
-            endfunction
-            au BufEnter * call SetSyntasticSettingsForRom()
         " }
 
         let g:syntastic_mode_map = { 'mode': 'active',
@@ -1153,6 +1171,15 @@ endif
     " Tagbar {
         nmap <Leader>ot :TagbarToggle<CR>
     " }
+    " vim-test {
+        " these "Ctrl mappings" work well when Caps Lock is mapped to Ctrl
+        nmap <silent> t<C-n> :TestNearest<CR>
+        nmap <silent> t<C-f> :TestFile<CR>
+        nmap <silent> t<C-s> :TestSuite<CR>
+        nmap <silent> t<C-l> :TestLast<CR>
+        nmap <silent> t<C-g> :TestVisit<CR>
+        let test#strategy = "dispatch"
+    " }
 
     " Ultisnips {
         let g:UltiSnipsSnippetDirectories=["UltiSnips", "default-snippets", "custom-snippets"]
@@ -1208,7 +1235,7 @@ augroup END
 
         " Disable auto omni completion for these filetypes, trigger manually
         " instead
-        let g:ycm_filetype_specific_completion_to_disable = { 'vim':1, 'txt':1, 'javascript':1, 'php':1 }
+        "let g:ycm_filetype_specific_completion_to_disable = { 'vim':1, 'txt':1, 'javascript':1, 'php':1 }
         let g:ycm_complete_in_comments = 1
         let g:ycm_complete_in_strings = 1
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
@@ -1218,7 +1245,7 @@ augroup END
         let g:ycm_auto_trigger=0
 
         " Allow manual trigger of identifier completeion
-        let g:ycm_auto_trigger = 0
+        let g:ycm_auto_trigger = 1
         let g:ycm_collect_identifiers_from_comments_and_strings = 1
         let g:ycm_collect_identifiers_from_tags_files=1
         inoremap <a-i> <c-r>=<sid>ycm_trigger_identifier()<cr>
@@ -1232,6 +1259,21 @@ augroup END
           doautocmd TextChangedI
           return ''
         endfunction
+        let g:ycm_semantic_triggers =  {
+          \   'c': ['->', '.'],
+          \   'objc': ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
+          \            're!\[.*\]\s'],
+          \   'ocaml': ['.', '#'],
+          \   'cpp,cuda,objcpp': ['->', '.', '::'],
+          \   'perl': ['->'],
+          \   'php': ['->', '::'],
+          \   'cs,d,elixir,go,groovy,java,javascript,julia,perl6,python,scala,typescript,vb': ['.'],
+          \   'ruby,rust': ['.', '::'],
+          \   'lua': ['.', ':'],
+          \   'erlang': [':'],
+          \   'typescript': ['.'],
+          \ }
+        "let g:ycm_semantic_triggers['typescript'] = ['.']
         "let g:ycm_semantic_triggers = { 'php' : [] }
         " }
 
@@ -1244,10 +1286,11 @@ augroup END
         set guioptions-=T           " Remove the toolbar
         set guioptions-=m           " Remove the menu
         "set lines=40                " 40 lines of text instead of 24
-        set guifont=Source\ Code\ Pro\ Medium\ 12,Andale\ Mono\ Regular\ 16,Menlo\ Regular\ 15,Consolas\ Regular\ 16,Courier\ New\ Regular\ 18
         set linespace=-1 " Font rendering isn't as nice as windows at 8, but we can remove 2px from each line to fit more lines on the screen
-        if has("gui_mac")
-            set guifont=Source\ Code\ Pro:h8,Andale\ Mono\ Regular:h16,Menlo\ Regular:h15,Consolas\ Regular:h16,Courier\ New\ Regular:h18
+        if !has("unix")
+            set guifont=Source\ Code\ Pro\ Medium\ 12,Andale\ Mono\ Regular\ 16,Menlo\ Regular\ 15,Consolas\ Regular\ 16,Courier\ New\ Regular\ 18
+        elseif has("gui_mac")
+            set guifont=SourceCodePro-Regular:h11,Andale\ Mono\ Regular:h16,Menlo\ Regular:h15,Consolas\ Regular:h16,Courier\ New\ Regular:h18
         elseif has("gui_win32")
             set guifont=Source\ Code\ Pro:h8,Andale_Mono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
             au GUIEnter * simalt ~x
