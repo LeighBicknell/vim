@@ -4,254 +4,137 @@ let $HOME = "/Users/Leigh.bicknell"
 if has('nvim')
     let s:editor_root=expand($HOME . "/.nvim")
     let $editor_root=s:editor_root
+    let &runtimepath.=','.$editor_root
 else
     let s:editor_root=expand($HOME . "/.vim")
     let $editor_root=s:editor_root
 endif
 
 
-" .vimrc.before {
-    " CYGWIN {
-         if has("win32") && $SHELL == "/bin/bash" && executable("C:/cygwin/bin/bash")
-            let $TMP = $HOME . "/AppData/Local/Temp/"
-            set shell=C:/cygwin/bin/bash
-            set shellcmdflag=-c
-            set shellxquote=\"
-            let g:cygwin=1
-        endif
-    " }
+" needs to be done early
+let g:CommandTPreferredImplementation='ruby'
 
-    let g:bundle_groups=['general', 'programming', 'php', 'javascript', 'html', 'twig', 'csv', 'vue', 'misc']
-"    let g:bundle_groups=['general', 'programming']
-    let g:php_refactor_command='php-refactor'
-    let g:xml_syntax_folding=1
-    "au FileType xml setlocal foldmethod=syntax
-"}
+" install vimplug
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.nvim/bundle')
+
+    Plug 'shougo/vimproc'
+    " GENERAL
+    Plug 'mhinz/vim-grepper'
+    Plug 'overcache/NeoSolarized'
+    Plug 'tpope/vim-repeat'
+    Plug 'tpope/vim-surround'
+    Plug 'tpope/vim-abolish'
+    Plug 'tpope/vim-unimpaired'
+    Plug 'tpope/vim-eunuch'
+    Plug 'benjifisher/matchit.zip'
+    Plug 'mbbill/undotree'
+    Plug 'nathanaelkane/vim-indent-guides'
+    Plug 'scrooloose/nerdtree'
+    Plug 'vim-scripts/Tab-Name'
+    Plug 'SirVer/ultisnips'
+    Plug 'mattn/emmet-vim'
+    Plug 'moll/vim-bbye'
+    Plug 'wincent/command-t'
+    Plug 'tpope/vim-dispatch'
+    Plug 'FlickerBean/vim-dirdiff'
+    " Open browser
+    Plug 'tyru/open-browser.vim'
+    " Open items from quickfix wherever i want!
+    Plug 'yssl/QFEnter'
+
+
+
+    " PROGRAMMING
+    "Plug 'scrooloose/syntastic'
+    "Git integration
+    Plug 'github/copilot.vim'
+    Plug 'tpope/vim-fugitive'
+    " Syntax, indent and filetype plugins for git, gitcommit, gitconfig
+    " etc Earlier versions shipped with VIM
+    Plug 'tpope/vim-git'
+    " Git details in gutter
+    Plug 'airblade/vim-gitgutter'
+    Plug 'mattn/webapi-vim'
+    Plug 'scrooloose/nerdcommenter'
+    Plug 'godlygeek/tabular'
+    "Plug 'vcscommand.vim'
+    "Plug 'vim-scripts/cscope_macros.vim'
+    "Plug 'Valloric/YouCompleteMe'
+    "Plug 'ap/vim-css-color'
+    "Plug 'majutsushi/tagbar'
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    "Plug 'neoclide/coc-phpls', {'do': 'yarn install --frozen-lockfile'}
+
+    " PHP
+    Plug 'StanAngeloff/php.vim'
+    " "This is needed by pdv :/
+    Plug 'tobyS/vmustache'
+    " PHPDocBlocks
+    " Plug 'shawncplus/phpcomplete.vim'
+    "Plug 'm2mdas/phpcomplete-extended'
+    "Plug 'm2mdas/phpcomplete-extended-symfony'
+    "Plug 'm2mdas/phpcomplete-extended-laravel'
+    "Plug 'lvht/phpcd.vim'
+    "Plug 'taoso/phpcd.vim'
+    "Plug 'epii1/phpcd.vim', {'pinned': 1}
+    Plug 'FlickerBean/pdv'
+    Plug 'arnaud-lb/vim-php-namespace'
+    Plug 'rayburgemeestre/phpfolding.vim'
+    "Plug 'FlickerBean/vim-php-refactoring'
+    Plug 'adoy/vim-php-refactoring-toolbox'
+    Plug 'stephpy/vim-php-cs-fixer'
+    " Helper for creating php snippets
+    Plug 'sniphpets/sniphpets'
+    Plug 'jwalton512/vim-blade'
+    "Plug 'sniphpets/sniphpets-symfony'
+    " Wordpress
+    " Plug 'dsawardekar/wordpress.vim'
+    " Plug 'Garethp/vdebug'
+    Plug 'vim-test/vim-test'
+
+    "PYTHON
+    " Pick either python-mode or pyflakes & pydoc
+    "Plug 'klen/python-mode'
+    "Plug 'python.vim'
+    "Plug 'python_match.vim'
+
+    "JAVASCRIPT
+    Plug 'elzr/vim-json'
+    Plug 'briancollins/vim-jst'
+    Plug 'leafgarland/typescript-vim'
+    Plug 'jason0x43/vim-js-indent'
+    " for Syntastic typescript
+    Plug 'Quramy/tsuquyomi'
+
+
+    "CSV
+    Plug 'chrisbra/csv.vim'
+
+
+    " VUE
+    Plug 'posva/vim-vue'
+
+call plug#end()
+
 
 " Environment {
 
     " Basics {
         set nocompatible        " Must be first line
         if !(has('win16') || has('win32') || has('win64'))
-            set shell=/bin/bash
+            "set shell=/bin/bash
+            set shell=/bin/bash\ -l
         endif
-    " }
-
-    " Windows Compatible {
-        " On Windows, also use '.vim' instead of 'vimfiles'; this makes synchronization
-        " across (heterogeneous) systems easier.
-        if has('gui_running')
-            if has('win32') || has('win64')
-                let &rtp = s:editor_root .','.$VIMRUNTIME
-
-                " Be nice and check for multi_byte even if the config requires
-                " multi_byte support most of the time
-                if has("multi_byte")
-                    " Windows cmd.exe still uses cp850. If Windows ever moved to
-                    " Powershell as the primary terminal, this would be utf-8
-                    set termencoding=cp850
-                    " Let Vim use utf-8 internally, because many scripts require this
-                    set encoding=utf-8
-                    setglobal fileencoding=utf-8
-                    " Windows has traditionally used cp1252, so it's probably wise to
-                    " fallback into cp1252 instead of eg. iso-8859-15.
-                    " Newer Windows files might contain utf-8 or utf-16 LE so we might
-                    " want to try them first.
-                    set fileencodings=ucs-bom,utf-8,utf-16le,cp1252,iso-8859-15
-                endif
-            endif
-        endif
-    " }
-    " Setup Bundle Support {
-        filetype on
-        filetype off
-        " Add YCM to path
-        "set rtp+=$HOME/.vim/vim-ycm
-        " Add PHPMAN to path
-        let &rtp = &rtp . ',' . s:editor_root . '/vim-PHPMAN'
-        " add Vundle to path
-        let &rtp = &rtp . ',' . s:editor_root . '/bundle/Vundle.vim'
-        call vundle#rc(s:editor_root . '/bundle')
     " }
 
 " }
 
-" Bundles {
-
-    " Deps {
-        Bundle 'VundleVim/Vundle.vim'
-        Bundle 'MarcWeber/vim-addon-mw-utils'
-        Bundle 'tomtom/tlib_vim'
-        Bundle 'Shougo/vimproc.vim'
-        Bundle 'mhinz/vim-grepper'
-    " }
-
-    " General {
-        if count(g:bundle_groups, 'general')
-            Bundle 'godlygeek/csapprox'
-            Bundle 'altercation/vim-colors-solarized'
-            Bundle 'tpope/vim-repeat'
-            Bundle 'tpope/vim-surround'
-            Bundle 'tpope/vim-abolish.git'
-            Bundle 'tpope/vim-unimpaired'
-            Bundle 'tpope/vim-eunuch'
-            Bundle 'benjifisher/matchit.zip'
-            Bundle 'mbbill/undotree'
-            Bundle 'nathanaelkane/vim-indent-guides'
-            Bundle 'scrooloose/nerdtree'
-            Bundle 'Tab-Name'
-            Bundle 'FlickerBean/tcd.vim'
-            Bundle 'SirVer/ultisnips'
-            Bundle 'mattn/emmet-vim'
-            Bundle 'moll/vim-bbye'
-            Bundle 'wincent/Command-T'
-            "Bundle 'oplatek/Conque-Shell' "Replaced by dispatch
-            Bundle 'tpope/vim-dispatch'
-            Bundle 'FlickerBean/vim-dirdiff'
-            " Open browser
-            Bundle 'tyru/open-browser.vim'
-            " Open items from quickfix wherever i want!
-            Bundle 'yssl/QFEnter'
-        endif
-    "
-    "
-    " General Programming {
-        if count(g:bundle_groups, 'programming')
-            Plugin 'luochen1990/rainbow'
-            Bundle 'scrooloose/syntastic'
-            "Git integration
-            Bundle 'tpope/vim-fugitive'
-            " Syntax, indent and filetype plugins for git, gitcommit, gitconfig
-            " etc Earlier versions shipped with VIM
-            Bundle 'tpope/vim-git'
-            " Git details in gutter
-            Bundle 'airblade/vim-gitgutter'
-            Bundle 'mattn/webapi-vim'
-            Bundle 'scrooloose/nerdcommenter'
-            Bundle 'godlygeek/tabular'
-            "Bundle 'vcscommand.vim'
-            Bundle 'vim-scripts/cscope_macros.vim'
-            Bundle 'Valloric/YouCompleteMe'
-            "Bundle 'ap/vim-css-color'
-            Bundle 'majutsushi/tagbar'
-            if has('unix')
-                " Requires unix system
-                Bundle 'zenbro/mirror.vim'
-            endif
-            Bundle 'editorconfig/editorconfig-vim'
-            Bundle 'vim-test/vim-test'
-        endif
-    " }
-
-    " PHP {
-        if count(g:bundle_groups, 'php')
-            Bundle 'StanAngeloff/php.vim'
-            " "This is needed by pdv :/
-            Bundle 'tobyS/vmustache'
-            " PHPDocBlocks
-            " Bundle 'shawncplus/phpcomplete.vim'
-            "Bundle 'm2mdas/phpcomplete-extended'
-            "Bundle 'm2mdas/phpcomplete-extended-symfony'
-            "Bundle 'm2mdas/phpcomplete-extended-laravel'
-            Bundle 'lvht/phpcd.vim'
-            Bundle 'FlickerBean/pdv'
-            Bundle 'arnaud-lb/vim-php-namespace'
-            Bundle 'rayburgemeestre/phpfolding.vim'
-            "Bundle 'FlickerBean/vim-php-refactoring'
-            Bundle 'adoy/vim-php-refactoring-toolbox'
-            Bundle 'stephpy/vim-php-cs-fixer'
-            " Helper for creating php snippets
-            Bundle 'sniphpets/sniphpets'
-            Bundle 'jwalton512/vim-blade'
-            "Bundle 'sniphpets/sniphpets-symfony'
-            " Wordpress
-            " Bundle 'dsawardekar/wordpress.vim'
-            " Bundle 'Garethp/vdebug'
-        endif
-    " }
-
-    " Python {
-        if count(g:bundle_groups, 'python')
-            " Pick either python-mode or pyflakes & pydoc
-            Bundle 'klen/python-mode'
-            Bundle 'python.vim'
-            Bundle 'python_match.vim'
-        endif
-    " }
-
-    " Javascript {
-        if count(g:bundle_groups, 'javascript')
-            Bundle 'elzr/vim-json'
-            Bundle 'briancollins/vim-jst'
-            Bundle 'leafgarland/typescript-vim'
-            Bundle 'jason0x43/vim-js-indent'
-            " for Syntastic typescript
-            Bundle 'Quramy/tsuquyomi'
-        endif
-    " }
-
-    " Java {
-        if count(g:bundle_groups, 'scala')
-            Bundle 'derekwyatt/vim-scala'
-            Bundle 'derekwyatt/vim-sbt'
-        endif
-    " }
-
-    " Haskell {
-        if count(g:bundle_groups, 'haskell')
-            Bundle 'travitch/hasksyn'
-            Bundle 'dag/vim2hs'
-            Bundle 'Twinside/vim-haskellConceal'
-            Bundle 'lukerandall/haskellmode-vim'
-            Bundle 'ujihisa/neco-ghc'
-            Bundle 'eagletmt/ghcmod-vim'
-            Bundle 'adinapoli/cumino'
-            Bundle 'bitc/vim-hdevtools'
-        endif
-    " }
-
-    " Ruby {
-        if count(g:bundle_groups, 'ruby')
-            Bundle 'tpope/vim-rails'
-            let g:rubycomplete_buffer_loading = 1
-        endif
-    " }
-
-    " Go Lang {
-        if count(g:bundle_groups, 'go')
-            Bundle 'jnwhiteh/vim-golang'
-            Bundle 'spf13/vim-gocode'
-        endif
-    " }
-
-    " Misc {
-        if count(g:bundle_groups, 'misc')
-            Bundle 'tpope/vim-markdown'
-            Bundle 'spf13/vim-preview'
-            Bundle 'tpope/vim-cucumber'
-            Bundle 'quentindecock/vim-cucumber-align-pipes'
-            Bundle 'Puppet-Syntax-Highlighting'
-        endif
-    " }
-
-    " Twig {
-        if count(g:bundle_groups, 'twig')
-            Bundle 'lumiliet/vim-twig'
-        endif
-    " }
-    
-    " csv {
-        if count(g:bundle_groups, 'csv')
-            Bundle 'chrisbra/csv.vim'
-        endif
-    " }
-    
-    " vue {
-        if count(g:bundle_groups, 'vue')
-            Bundle 'posva/vim-vue'
-        endif
-    " }
-" }
 
 " General {
     set fileformats=unix,dos
@@ -268,6 +151,7 @@ endif
     scriptencoding utf-8
 
     " This linux if isn't working :/
+    set clipboard=unnamedplus
     if has ('unix') && (has ('gui') && has('nvim')) " On Linux use + register for copy-paste
         set clipboard=unnamedplus
     elseif has ('gui') || has ('gui_mac')          " On mac and Windows, use * register for copy-paste
@@ -316,7 +200,8 @@ endif
         " disable hack, this disables all whitespace vs changes in amount of
         " whitespace
         " So why did I disable it? re-enabled
-        set diffexpr=DiffW()
+        " Disabled again because diff doesn't accept --binary flag
+        "set diffexpr=DiffW()
         function! DiffW()
             let opt = ""
             if &diffopt =~ "icase"
@@ -358,6 +243,7 @@ endif
                                     " for some reason!
     endif
 
+    set title
     if has('statusline')
         set laststatus=2
 
@@ -410,7 +296,7 @@ endif
         set statusline+=%{StatuslineLongLineWarning()}
 
         set statusline+=%#warningmsg#
-        set statusline+=%{SyntasticStatuslineFlag()}
+        "set statusline+=%{SyntasticStatuslineFlag()}
         set statusline+=%*
 
         "display a warning if &paste is set
@@ -742,10 +628,13 @@ endif
         nnoremap <Leader>q :Bdelete<CR>
         nnoremap <Leader>Q :Bdelete!<CR>
     " }
+    
+    " Command-T {
+    " }
 
     " Cscope {
-        set cst
-        set cscopequickfix=s-,c-,d-,i-,t-,e-
+        "set cst
+        "set cscopequickfix=s-,c-,d-,i-,t-,e-
 
         if filereadable("cscope.out")
             "shut up msgs
@@ -819,17 +708,6 @@ endif
         nmap <C-Space><C-Space>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>
     " }
 
-    " Command-T {
-        let g:CommandTWildIgnore=&wildignore . ",*/.git/*,*/vendor/*,*.jpg,*.gif,*.png,*.tmp,*/node_modules/*,*/TEMPFOLDER/*"
-        " Use find tool for file searching
-        let g:CommandTFileScanner = 'find'
-        " Start searching at current directory
-        let g:CommandTTraverseSCM = 'pwd'
-        let g:CommandTMaxHeight = 30
-        " Revert switchbuf='' (CommandT messing with vim settings: https://github.com/wincent/command-t/issues/309)
-        au VimEnter * set switchbuf=
-    " }
-
     " Ctags {
         set tags=./tags,tags,../tags
 
@@ -885,9 +763,9 @@ endif
     " Fugitive {
         nnoremap <silent> <leader>gs :Git<CR>
         nnoremap <silent> <leader>gd :Gdiff<CR>
-        nnoremap <silent> <leader>gc :Gcommit<CR>
+        nnoremap <silent> <leader>gc :Git commit<CR>
         nnoremap <silent> <leader>gb :Git blame<CR>
-        nnoremap <silent> <leader>gl :Glog<CR>
+        nnoremap <silent> <leader>gl :Gclog<CR>
         nnoremap <silent> <leader>gp :Git push<CR>
         nnoremap <silent> <leader>gr :Gread<CR>:GitGutter<CR>
         nnoremap <silent> <leader>gw :Gwrite<CR>:GitGutter<CR>
@@ -1000,13 +878,13 @@ endif
         let g:phpcomplete_parse_docblock_comments = 1
 
         "extended {
-            autocmd  FileType  php setlocal omnifunc=phpcomplete_extended#CompletePHP
+            "autocmd  FileType  php setlocal omnifunc=phpcomplete_extended#CompletePHP
             let g:phpcomplete_index_composer_command='composer'
         " }
     " }
 
     " phpcd {
-        " Auto restart the deamon after every bugger switch
+        " Auto restart the deamon after every buffer switch
         let g:phpcd_auto_restart=1
     " }
 
@@ -1178,7 +1056,7 @@ endif
         nmap <silent> t<C-s> :TestSuite<CR>
         nmap <silent> t<C-l> :TestLast<CR>
         nmap <silent> t<C-g> :TestVisit<CR>
-        let test#strategy = "dispatch"
+        let test#strategy = "neovim"
     " }
 
     " Ultisnips {
@@ -1228,53 +1106,155 @@ augroup END
         let g:wordpress_vim_dont_generate_tags=1
     " }
 
-    " YCM {
-        " Disable until I have more ram (7mb tags file causes 175mb ram
-        " usage!)
-        let g:ycm_collect_identifiers_from_tags_files=0
-
-        " Disable auto omni completion for these filetypes, trigger manually
-        " instead
-        "let g:ycm_filetype_specific_completion_to_disable = { 'vim':1, 'txt':1, 'javascript':1, 'php':1 }
-        let g:ycm_complete_in_comments = 1
-        let g:ycm_complete_in_strings = 1
-        let g:ycm_collect_identifiers_from_comments_and_strings = 0
-        " Get php main functions/keywords from syntax file
-        let g:ycm_seed_identifiers_with_syntax = 1
-        let g:ycm_disable_for_files_larger_than_kb = 950
-        let g:ycm_auto_trigger=0
-
-        " Allow manual trigger of identifier completeion
-        let g:ycm_auto_trigger = 1
-        let g:ycm_collect_identifiers_from_comments_and_strings = 1
-        let g:ycm_collect_identifiers_from_tags_files=1
-        inoremap <a-i> <c-r>=<sid>ycm_trigger_identifier()<cr>
-
-        function! s:ycm_trigger_identifier()
-          let g:ycm_auto_trigger = 1
-          augroup ycm_trigger_identifier
+    " coc/intelephense/autocomplet {
+        if executable('intelephense')
+          augroup LspPHPIntelephense
             au!
-            autocmd InsertLeave * ++once let g:ycm_auto_trigger = 0
-          augroup end
-          doautocmd TextChangedI
-          return ''
+            au User lsp_setup call lsp#register_server({
+                \ 'name': 'intelephense',
+                \ 'cmd': {server_info->[&shell, &shellcmdflag, 'intelephense --stdio']},
+                \ 'whitelist': ['php'],
+                \ 'initialization_options': {'storagePath': '/tmp/intelephense'},
+                \ 'workspace_config': {
+                \   'intelephense': {
+                \     'files': {
+                \       'maxSize': 1000000,
+                \       'associations': ['*.php', '*.phtml'],
+                \       'exclude': [],
+                \     },
+                \     'completion': {
+                \       'insertUseDeclaration': v:true,
+                \       'fullyQualifyGlobalConstantsAndFunctions': v:false,
+                \       'triggerParameterHints': v:true,
+                \       'maxItems': 100,
+                \     },
+                \     'format': {
+                \       'enable': v:true
+                \     },
+                \   },
+                \ }
+                \})
+          augroup END
+        endif
+
+        " Use tab for trigger completion with characters ahead and navigate.
+        " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+        " other plugin before putting this into your config.
+        " use <tab> to trigger completion and navigate to the next complete item
+        function! CheckBackspace() abort
+          let col = col('.') - 1
+          return !col || getline('.')[col - 1]  =~# '\s'
         endfunction
-        let g:ycm_semantic_triggers =  {
-          \   'c': ['->', '.'],
-          \   'objc': ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
-          \            're!\[.*\]\s'],
-          \   'ocaml': ['.', '#'],
-          \   'cpp,cuda,objcpp': ['->', '.', '::'],
-          \   'perl': ['->'],
-          \   'php': ['->', '::'],
-          \   'cs,d,elixir,go,groovy,java,javascript,julia,perl6,python,scala,typescript,vb': ['.'],
-          \   'ruby,rust': ['.', '::'],
-          \   'lua': ['.', ':'],
-          \   'erlang': [':'],
-          \   'typescript': ['.'],
-          \ }
-        "let g:ycm_semantic_triggers['typescript'] = ['.']
-        "let g:ycm_semantic_triggers = { 'php' : [] }
+
+        "inoremap <silent><expr> <Tab>
+        "      \ coc#pum#visible() ? coc#pum#next(1) :
+        "      \ CheckBackspace() ? "\<Tab>" :
+        "      \ coc#refresh()
+
+        "inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
+
+        " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+        " position. Coc only does snippet and additional edit on confirm.
+        " <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+        if exists('*complete_info')
+          inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+        else
+          inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+        endif
+
+        " Use `[g` and `]g` to navigate diagnostics
+        nmap <silent> [g <Plug>(coc-diagnostic-prev)
+        nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+        " GoTo code navigation.
+        nmap <silent> gd <Plug>(coc-definition)
+        nmap <silent> gy <Plug>(coc-type-definition)
+        nmap <silent> gi <Plug>(coc-implementation)
+        nmap <silent> gr <Plug>(coc-references)
+
+        " Use K to show documentation in preview window.
+        nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+        function! s:show_documentation()
+          if (index(['vim','help'], &filetype) >= 0)
+            execute 'h '.expand('<cword>')
+          else
+            call CocAction('doHover')
+          endif
+        endfunction
+
+        " Highlight the symbol and its references when holding the cursor.
+        autocmd CursorHold * silent call CocActionAsync('highlight')
+
+        " Symbol renaming.
+        nmap <leader>rn <Plug>(coc-rename)
+
+        " Formatting selected code.
+        xmap <leader>f  <Plug>(coc-format-selected)
+        nmap <leader>f  <Plug>(coc-format-selected)
+
+        augroup mygroup
+          autocmd!
+          " Setup formatexpr specified filetype(s).
+          autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+          " Update signature help on jump placeholder.
+          autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+        augroup end
+
+        " Applying codeAction to the selected region.
+        " Example: `<leader>aap` for current paragraph
+        xmap <leader>a  <Plug>(coc-codeaction-selected)
+        nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+        " Remap keys for applying codeAction to the current line.
+        nmap <leader>ac  <Plug>(coc-codeaction)
+        " Apply AutoFix to problem on the current line.
+        nmap <leader>qf  <Plug>(coc-fix-current)
+
+        " Introduce function text object
+        " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+        xmap if <Plug>(coc-funcobj-i)
+        xmap af <Plug>(coc-funcobj-a)
+        omap if <Plug>(coc-funcobj-i)
+        omap af <Plug>(coc-funcobj-a)
+
+        " Use <TAB> for selections ranges.
+        " NOTE: Requires 'textDocument/selectionRange' support from the language server.
+        " coc-tsserver, coc-python are the examples of servers that support it.
+        "nmap <silent> <TAB> <Plug>(coc-range-select)
+        "xmap <silent> <TAB> <Plug>(coc-range-select)
+
+        " Add `:Format` command to format current buffer.
+        command! -nargs=0 Format :call CocAction('format')
+
+        " Add `:Fold` command to fold current buffer.
+        command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+        " Add `:OR` command for organize imports of the current buffer.
+        command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+        " Add (Neo)Vim's native statusline support.
+        " NOTE: Please see `:h coc-status` for integrations with external plugins that
+        " provide custom statusline: lightline.vim, vim-airline.
+        set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+        " Mappings using CoCList:
+        " Show all diagnostics.
+        nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+        " Manage extensions.
+        nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+        " Show commands.
+        nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+        " Find symbol of current document.
+        nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+        " Search workspace symbols.
+        nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+        " Do default action for next item.
+        nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+        " Do default action for previous item.
+        nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+        " Resume latest coc list.
+        nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
         " }
 
 " }
@@ -1313,18 +1293,12 @@ augroup END
         "set term=builtin_ansi       " Make arrow and other keys work
     endif
 
-    let g:solarized_degrade=0
-    let g:solarized_bold=0 " Causes odd characters sometimes in term
-    let g:solarized_contrast="normal"
-    let g:solarized_visibility="normal"
-    let g:solarized_termtrans=0    "default value is 0
-    let g:solarized_termcolors=256    "default value is 16
     if has('nvim')
         let $NVIM_TUI_ENABLE_TRUE_COLOR=1
     endif
     syntax enable
     set background=dark
-    colorscheme solarized
+    colorscheme NeoSolarized
 
     " Indent_guides {
         if !has('gui_running')
@@ -1368,16 +1342,13 @@ augroup END
             execute "let g:vdebug_options['path_maps'] = { '/var/www/': '" . t:tcd_cwd . "' }"
         endif
     endfunction
-    " On vim enter, create an autocommand for TabEnter, this forces the autocmd
-    " to be created and thus fired after Tcd plugins autocommand (in theory,.. 
-    " in reality it isn't working)
-    au VimEnter * au TabEnter * silent call s:update_debug_paths()
-
 
     function! Ptab(tabdir, tabname)
         execute "tabnew"
-        execute "Tcd ".a:tabdir
+        execute "tcd ".a:tabdir
         execute "TName ".a:tabname
+        execute "CocRestart"
+        execute "NERDTree"
         if getcwd() != $HOME
             if filereadable(getcwd() . '/.vimrc')
                 execute "so " . getcwd() . '/.vimrc'
@@ -1388,7 +1359,7 @@ augroup END
     command! -complete=dir -nargs=+ Ptab call Ptab(<f-args>)
 
     function! Popen(tabdir, tabname)
-        execute "Tcd ".a:tabdir
+        execute "tcd ".a:tabdir
         execute "TName ".a:tabname
     endfunction
     command! -complete=dir -nargs=+ Popen call Popen(<f-args>)
@@ -1754,3 +1725,4 @@ augroup END
 if filereadable(expand("~/.vimrc-local"))
     source ~/.vimrc-local
 endif
+echom "Loaded vimrc"

@@ -258,8 +258,8 @@ endsnippet
 snippet try "try catch" !
 try {
 	${VISUAL}${1}
-} catch (Exception $e) {
-	die($e->getMessage());
+} catch (\Throwable $e) {
+	Log::error($e->getMessage(), ['exception' => $e]);
 }
 endsnippet
 
